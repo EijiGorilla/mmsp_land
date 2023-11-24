@@ -31,7 +31,7 @@ function maybeDisposeRoot(divId: any) {
 
 ///*** Others */
 /// Draw chart
-const LotChart = ({ contractp, landtype, landsection, typelist }: any) => {
+const LotChart = ({ contractp, landtype, landsection }: any) => {
   // 1. Land Acquisition
   const pieSeriesRef = useRef<unknown | any | undefined>({});
   const legendRef = useRef<unknown | any | undefined>({});

@@ -43,14 +43,14 @@ function resultClickHandler(event: any) {
   });
 }
 
-const ExpropriationList = ({ contractp, landtype, landsection }: any) => {
+const LotIssueList = ({ contractp, landtype, landsection }: any) => {
   const [exproItem, setExproItem] = useState<undefined | any>([]);
 
   useEffect(() => {
     // Reset the list
     setExproItem([]);
     var query = lotLayer.createQuery();
-    const qExpro = 'StatusNVS3 = 5';
+    const qExpro = 'Issue IS NOT NULL';
     const qCP = "Package = '" + contractp + "'";
     const qLandType = "Type = '" + landtype + "'";
     const qCpLandType = qCP + ' AND ' + qLandType;
@@ -76,7 +76,7 @@ const ExpropriationList = ({ contractp, landtype, landsection }: any) => {
         const lotid = attributes.ID;
         const cp = attributes.Package;
         const landtype = attributes.Type;
-        const landowner = attributes.OWNER;
+        const issue = attributes.Issue;
         const landsection = attributes.Station1;
         const objectid = attributes.OBJECTID;
         const id = index;
@@ -88,7 +88,7 @@ const ExpropriationList = ({ contractp, landtype, landsection }: any) => {
             lotid: lotid,
             cp: cp,
             landtype: landtype,
-            landowner: landowner,
+            issue: issue,
             landsection: landsection,
             objectid: objectid,
           },
@@ -113,7 +113,7 @@ const ExpropriationList = ({ contractp, landtype, landsection }: any) => {
                   <CalciteListItem
                     key={result.id}
                     label={result.lotid}
-                    description={result.landowner}
+                    description={result.issue}
                     value={result.objectid}
                     selected={undefined}
                     onCalciteListItemSelect={(event: any) => resultClickHandler(event)}
@@ -131,4 +131,4 @@ const ExpropriationList = ({ contractp, landtype, landsection }: any) => {
   );
 };
 
-export default ExpropriationList;
+export default LotIssueList;

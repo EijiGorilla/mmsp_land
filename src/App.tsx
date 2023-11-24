@@ -23,14 +23,14 @@ import {
   CalciteList,
   CalciteListItem,
 } from '@esri/calcite-components-react';
+import loadable from '@loadable/component';
 import { zoomToLayer } from './Query';
-//import LotProgressChart from './components/LotProgressChart';
-//import ExpropriationList from './components/ExpropriationList';
-// import loadable from '@loadable/component';
 import { lotLayer } from './layers';
 import LotChart from './components/LotChart';
 import { DropDownData } from './customClass';
-import StructureChart from './components/structureChart';
+import ExpropriationList from './components/ExpropriationList';
+import LotIssueList from './components/LotIssueList';
+import LotProgressChart from './components/LotProgressChart';
 
 function App() {
   //**** Set states */
@@ -54,8 +54,8 @@ function App() {
   const [landTypeSelected, setLandTypeSelected] = useState({ name: '' });
 
   // loadable for code splitting
-  //const NloChart = loadable(() => import('./components/NloChart'));
-  // const StructureChart = loadable(() => import('./components/StructureChart'));
+  const IsfChart = loadable(() => import('./components/IsfChart'));
+  const StructureChart = loadable(() => import('./components/StructureChart'));
 
   //**** Create dropdonw list */
   useEffect(() => {
@@ -155,10 +155,6 @@ function App() {
     singleValue: (defaultStyles: any) => ({ ...defaultStyles, color: '#fff' }),
   };
 
-  // https://developers.arcgis.com/calcite-design-system/resources/frameworks/
-  // --calcite-ui-background: #353535 f
-  // https://developers.arcgis.com/calcite-design-system/foundations/colors/
-  // https://codesandbox.io/examples/package/@esri/calcite-components-react
   return (
     <div>
       <CalciteShell>
@@ -167,8 +163,9 @@ function App() {
             <CalciteTabNav slot="tab-nav" id="thetabs">
               <CalciteTabTitle class="Land">Land</CalciteTabTitle>
               <CalciteTabTitle class="Structure">Structure</CalciteTabTitle>
-              <CalciteTabTitle class="NLO">NLO</CalciteTabTitle>
+              <CalciteTabTitle class="NLO">ISF</CalciteTabTitle>
               <CalciteTabTitle class="ExproList">ExproList</CalciteTabTitle>
+              <CalciteTabTitle class="IssueList">IssueList</CalciteTabTitle>
             </CalciteTabNav>
             {/* CalciteTab: Lot */}
             <CalciteTab>
@@ -191,22 +188,29 @@ function App() {
 
             {/* CalciteTab: Non-Land Owner */}
             <CalciteTab>
-              {/* <IsfChart
+              <IsfChart
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 landtype={landTypeSelected.name}
                 landsection={landSection === null ? '' : landSection}
-                typelist={landSectionList}
-              /> */}
+              />
             </CalciteTab>
 
             {/* CalciteTab: List of Lots under Expropriation */}
             <CalciteTab>
-              {/* <ExpropriationList
+              <ExpropriationList
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 landtype={landTypeSelected.name}
                 landsection={landSection === null ? '' : landSection}
-                typelist={landSectionList}
-              /> */}
+              />
+            </CalciteTab>
+
+            {/* CalciteTab: List of Lots with issues */}
+            <CalciteTab>
+              <LotIssueList
+                contractp={contractPackage === null ? '' : contractPackage.field1}
+                landtype={landTypeSelected.name}
+                landsection={landSection === null ? '' : landSection}
+              />
             </CalciteTab>
           </div>
         </CalciteTabs>
@@ -382,12 +386,11 @@ function App() {
                     <b>Lots under expropriation</b> are available in the 'Expro List' tab.
                   </li>
                   <li>
-                    Click/unclick widgets icon for viewing Layer list, legend, basemaps, and locate
-                    widgets under the main title.
+                    <b>Lots with issues</b> are available in the 'IssueList' tab.
                   </li>
                   <li>
-                    <b>Toggle a checkbox</b> above the Land pie chart to view{' '}
-                    <b>handed-over areas</b> (m2) of Contract Packages.
+                    Click/unclick widgets icon for viewing Layer list, legend, basemaps, and locate
+                    widgets under the main title.
                   </li>
                 </ul>
               </div>
@@ -399,17 +402,16 @@ function App() {
         <div className="mapDiv" ref={mapDiv}></div>
 
         {/* Lot progress chart is loaded ONLY when charts widget is clicked. */}
-        {/* {nextWidget === 'charts' && nextWidget !== activeWidget ? (
+        {nextWidget === 'charts' && nextWidget !== activeWidget ? (
           <LotProgressChart
             contractp={contractPackage === null ? '' : contractPackage.field1}
             landtype={landTypeSelected.name}
-            landsection={landSection === null ? '' : landSection}
-            typelist={landSectionList}
+            landsection={landSection === null ? '' : landSection.name}
             nextwidget={nextWidget === activeWidget ? null : nextWidget}
           />
         ) : (
           ''
-        )} */}
+        )}
       </CalciteShell>
     </div>
   );

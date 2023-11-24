@@ -120,7 +120,7 @@ export const statusMoaStructureChartQuery = [
 // Non-Land Owner
 const statusNlo = ['UNRELOCATED', 'RELOCATED'];
 
-export const statusNloChartQuery = [
+export const statusIsfChartQuery = [
   {
     category: statusNlo[0],
     value: 1,
@@ -353,12 +353,13 @@ export async function generateLotProgress(contractp: any, landtype: any, landsec
   var total_count_handover = new StatisticDefinition({
     onStatisticField: 'HandOverDate',
     outStatisticFieldName: 'total_count_handover',
-    statisticType: 'sum',
+    statisticType: 'count',
   });
 
   var query = lotLayer.createQuery();
   query.outStatistics = [total_count_handover];
   // eslint-disable-next-line no-useless-concat
+  const qStatus = 'HandOverDate IS NOT NULL';
   const qCP = "Package = '" + contractp + "'";
   const qLandType = "Type = '" + landtype + "'";
   const qCpLandType = qCP + ' AND ' + qLandType;
@@ -366,13 +367,15 @@ export async function generateLotProgress(contractp: any, landtype: any, landsec
   const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
 
   if (!contractp) {
-    lotLayer.definitionExpression = '1=1';
-  } else if (contractp && !landtype) {
-    lotLayer.definitionExpression = qLandType;
-  } else if (contractp && landtype) {
-    lotLayer.definitionExpression = qCpLandType;
+    query.where = qStatus;
+  } else if (contractp && !landtype && !landsection) {
+    query.where = qStatus + ' AND ' + qCP;
+  } else if (contractp && landtype && !landsection) {
+    query.where = qStatus + ' AND ' + qCpLandType;
   } else {
-    lotLayer.definitionExpression = qCpLandTypeSection;
+    console.log('test');
+    console.log(contractp, '; ', landtype, '; ', landsection);
+    query.where = qStatus + ' AND ' + qCpLandTypeSection;
   }
 
   query.outFields = ['HandOverDate'];
@@ -383,7 +386,7 @@ export async function generateLotProgress(contractp: any, landtype: any, landsec
     var stats = response.features;
     const data = stats.map((result: any, index: any) => {
       const attributes = result.attributes;
-      const date = attributes.HandedOverDate;
+      const date = attributes.HandOverDate;
       const count = attributes.total_count_handover;
 
       // compile in object array
@@ -392,7 +395,7 @@ export async function generateLotProgress(contractp: any, landtype: any, landsec
         value: count,
       });
     });
-
+    console.log(data);
     return data;
   });
 }
@@ -576,7 +579,7 @@ export async function generateStrucMoaData() {
   });
 }
 
-export async function generateNloData() {
+export async function generateIsfData() {
   var total_unrelocated_lot = new StatisticDefinition({
     onStatisticField: "CASE WHEN RELOCATION <> 'RELOCATED' THEN 1 ELSE 0 END",
     outStatisticFieldName: 'total_unrelocated_lot',
@@ -619,7 +622,7 @@ export async function generateNloData() {
   });
 }
 
-export async function generateNloNumber() {
+export async function generateIsfNumber() {
   var total_isf = new StatisticDefinition({
     onStatisticField: 'RELOCATION',
     outStatisticFieldName: 'total_isf',
@@ -630,7 +633,7 @@ export async function generateNloNumber() {
   query.outStatistics = [total_isf];
   return isfLayer.queryFeatures(query).then((response: any) => {
     var stats = response.features[0].attributes;
-    const totalisf = stats.total_lbp;
+    const totalisf = stats.total_isf;
 
     return totalisf;
   });
