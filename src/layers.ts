@@ -204,8 +204,7 @@ export const lotLayer = new FeatureLayer({
   layerId: 1,
   outFields: ['*'],
   title: 'Land Acquisition',
-
-  labelsVisible: false,
+  // labelsVisible: false,
   labelingInfo: [lotLabel],
   renderer: lotLayerStatusRenderer,
   popupTemplate: {
@@ -300,62 +299,6 @@ export const handedOverLotLayer = new FeatureLayer({
   renderer: handedOverRenderer,
   popupEnabled: false,
 });
-handedOverLotLayer.listMode = 'hide';
-handedOverLotLayer.visible = false;
-
-const lotLabelClass = {
-  symbol: new TextSymbol({
-    color: 'black',
-  }),
-
-  labelExpressionInfo: {
-    expression: '$feature.CN',
-  },
-};
-export const handedOverLotBackgroundLayer = new FeatureLayer({
-  portalItem: {
-    id: '7e20edfba96e4854acd716cbadf5f57f',
-    portal: {
-      url: 'https://gis.railway-sector.com/portal',
-    },
-  },
-  layerId: 1,
-  outFields: ['*'],
-  definitionExpression: 'HandedOver IS NULL',
-  labelingInfo: [lotLabelClass],
-  renderer: defaultRendererLot,
-  title: 'Handed-Over Lot Background',
-  popupTemplate: {
-    title: '<p>{Id}</p>',
-    lastEditInfoEnabled: false,
-    returnGeometry: true,
-    content: [
-      {
-        type: 'fields',
-        fieldInfos: [
-          {
-            fieldName: 'Issue',
-            label: 'Remarks',
-          },
-          {
-            fieldName: 'OWNER',
-            label: 'Land Owner',
-          },
-          {
-            fieldName: 'Station1',
-            label: 'Station',
-          },
-          {
-            fieldName: 'StatusNVS3',
-            label: '<p>Status of Land Acquisition</p>',
-          },
-        ],
-      },
-    ],
-  },
-});
-handedOverLotBackgroundLayer.listMode = 'hide';
-handedOverLotBackgroundLayer.visible = false;
 
 /* Handed-Over Subterranean Lot */
 export const pteLotSubteLayer = new FeatureLayer({
@@ -367,59 +310,12 @@ export const pteLotSubteLayer = new FeatureLayer({
   },
   layerId: 1,
   outFields: ['*'],
+  // eslint-disable-next-line no-useless-concat
   definitionExpression: "Type = 'Subterranean'" + ' AND ' + 'PTE = 1',
   title: 'PTE Subterranean Lots',
   renderer: handedOverRenderer,
   popupEnabled: false,
 });
-pteLotSubteLayer.listMode = 'hide';
-pteLotSubteLayer.visible = false;
-
-export const pteLotSubteBackgroundLayer = new FeatureLayer({
-  portalItem: {
-    id: '7e20edfba96e4854acd716cbadf5f57f',
-    portal: {
-      url: 'https://gis.railway-sector.com/portal',
-    },
-  },
-  layerId: 1,
-  outFields: ['*'],
-  // eslint-disable-next-line no-useless-concat
-  definitionExpression: "Type = 'Subterranean'" + ' AND ' + 'PTE = 0',
-  labelingInfo: [lotLabelClass],
-  title: 'PTE for Subterranean Lot',
-  renderer: defaultRendererLot,
-  popupTemplate: {
-    title: '<p>{Id}</p>',
-    lastEditInfoEnabled: false,
-    returnGeometry: true,
-    content: [
-      {
-        type: 'fields',
-        fieldInfos: [
-          {
-            fieldName: 'Issue',
-            label: 'Remarks',
-          },
-          {
-            fieldName: 'OWNER',
-            label: 'Land Owner',
-          },
-          {
-            fieldName: 'Station1',
-            label: 'Station',
-          },
-          {
-            fieldName: 'StatusNVS3',
-            label: '<p>Status of Land Acquisition</p>',
-          },
-        ],
-      },
-    ],
-  },
-});
-pteLotSubteBackgroundLayer.listMode = 'hide';
-pteLotSubteBackgroundLayer.visible = false;
 
 /* Structure Layer */
 const colorStructure = [
@@ -797,6 +693,20 @@ export const senateBoundaryLayer = new FeatureLayer({
 });
 
 /* Station Layer */
+const stationLabels = new LabelClass({
+  labelExpressionInfo: { expression: '$feature.Station1' },
+  symbol: {
+    type: 'text',
+    color: 'black',
+    haloColor: 'white',
+    haloSize: 1,
+    font: {
+      size: 10,
+      weight: 'bold',
+    },
+  },
+});
+
 export const stationLayer = new FeatureLayer({
   portalItem: {
     id: 'c34277793d164f248abb0926963ae92d',
@@ -805,6 +715,7 @@ export const stationLayer = new FeatureLayer({
     },
   },
   layerId: 1,
+  labelingInfo: [stationLabels],
   title: 'Station',
   definitionExpression: "Project = 'MMSP'",
   //screenSizePerspectiveEnabled: false, // gives constant size regardless of zoom

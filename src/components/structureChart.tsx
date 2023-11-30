@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react';
-import { structureLayer } from '../layers';
+import { lotLayer, structureLayer } from '../layers';
 import { view } from '../Scene';
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 import Query from '@arcgis/core/rest/support/Query';
@@ -243,13 +243,13 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
       const statusSelect = find?.value;
 
       var highlightSelect: any;
-      var query = structureLayer.createQuery();
+      var query = lotLayer.createQuery();
 
       view.when(function () {
-        view.whenLayerView(structureLayer).then((layerView): any => {
+        view.whenLayerView(lotLayer).then((layerView): any => {
           //chartLayerView = layerView;
 
-          structureLayer.queryFeatures(query).then(function (results) {
+          lotLayer.queryFeatures(query).then((results: any) => {
             const RESULT_LENGTH = results.features;
             const ROW_N = RESULT_LENGTH.length;
 
@@ -283,7 +283,7 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
           }); // End of queryFeatures
 
           layerView.filter = new FeatureFilter({
-            where: 'StatusStruc = ' + statusSelect,
+            where: 'Status = ' + statusSelect,
           });
         }); // End of view.whenLayerView
       }); // End of view.whenv
@@ -513,11 +513,11 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
 
       var highlightSelect: any;
 
-      var query = structureLayer.createQuery();
-      view.whenLayerView(structureLayer).then(function (layerView) {
+      var query = lotLayer.createQuery();
+      view.whenLayerView(lotLayer).then(function (layerView) {
         //CHART_ELEMENT.style.visibility = "visible";
 
-        structureLayer.queryFeatures(query).then(function (results) {
+        lotLayer.queryFeatures(query).then(function (results) {
           const RESULT_LENGTH = results.features;
           const ROW_N = RESULT_LENGTH.length;
 
@@ -531,7 +531,7 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
             objectIds: objID,
           });
 
-          structureLayer.queryExtent(queryExt).then(function (result) {
+          lotLayer.queryExtent(queryExt).then(function (result) {
             if (result.extent) {
               view.goTo(result.extent);
             }

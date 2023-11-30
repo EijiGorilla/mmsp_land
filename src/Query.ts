@@ -662,23 +662,3 @@ export function zoomToLayer(layer: any) {
       });
   });
 }
-
-export function highlightUrgent(layer: any) {
-  let highlight: any;
-  view.whenLayerView(layer).then((urgentLayerView) => {
-    var query = layer.createQuery();
-    layer.queryFeatures(query).then((results: any) => {
-      const length = results.features.length;
-      let objID = [];
-      for (var i = 0; i < length; i++) {
-        var obj = results.features[i].attributes.OBJECTID;
-        objID.push(obj);
-      }
-
-      if (highlight) {
-        highlight.remove();
-      }
-      highlight = urgentLayerView.highlight(objID);
-    });
-  });
-}

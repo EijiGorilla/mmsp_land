@@ -204,7 +204,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
           }); // End of queryFeatures
 
           layerView.filter = new FeatureFilter({
-            where: 'StatusLA = ' + statusSelect,
+            where: 'StatusNVS3 = ' + statusSelect,
           });
 
           // For initial state, we need to add this

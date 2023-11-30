@@ -21,9 +21,7 @@ import {
   depotBuildingLayer,
   bssDepotBuildingLayer,
   structureDemolishedLayer,
-  handedOverLotBackgroundLayer,
   handedOverLotLayer,
-  pteLotSubteBackgroundLayer,
   pteLotSubteLayer,
 } from './layers';
 
@@ -33,6 +31,13 @@ export const map = new Map({
 });
 
 // Group Layers
+const lotGroupLayer = new GroupLayer({
+  title: 'Land',
+  visible: true,
+  visibilityMode: 'exclusive',
+  layers: [pteLotSubteLayer, handedOverLotLayer, lotLayer],
+});
+
 const evsBoundaryPoGroupLayer = new GroupLayer({
   title: 'EVS Station/Creek',
   visible: false,
@@ -68,18 +73,14 @@ const structuresGroupLayer = new GroupLayer({
   layers: [structureLayer, structureDemolishedLayer],
 });
 
-map.add(lotLayer);
+map.add(lotGroupLayer);
 map.add(depotBuildingsGroupLayer);
 map.add(evsBoundaryPoGroupLayer);
 map.add(alignmentGroupLayer);
 map.add(structuresGroupLayer);
 map.add(isfLayer);
 map.add(boundaryGroupLayer);
-map.add(handedOverLotBackgroundLayer);
-map.add(pteLotSubteLayer);
-map.add(pteLotSubteBackgroundLayer);
 map.add(stationLayer);
-map.add(handedOverLotLayer);
 
 export const view = new MapView({
   container: undefined,
@@ -111,7 +112,11 @@ export const layerList = new LayerList({
     item.title === 'Demolished Structure' ||
     item.title === 'ISF (Informal Settlers Families)' ||
     item.title === 'East Valenzuela Station' ||
-    item.title === 'Senate-DepEd Boundary'
+    item.title === 'Senate-DepEd Boundary' ||
+    item.title === 'PTE Subterranean Lots' ||
+    item.title === 'Handed-Over Lots' ||
+    item.title === 'Structures' ||
+    item.title === 'EVS Station/Creek'
       ? (item.visible = false)
       : (item.visible = true);
   },

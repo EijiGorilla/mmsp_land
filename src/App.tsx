@@ -94,11 +94,6 @@ function App() {
   };
 
   // End of dropdown list
-
-  //https://stackoverflow.com/questions/70832641/react-onclick-event-working-on-twice-clicks-when-clicking-again
-  // if you add activeWidget and nextWidget as dependencies for the following useEffect,
-  // calcitePanel is forced to close when dropdownlist item is changed.
-  // The solution is simply adding no dependencies.
   useEffect(() => {
     if (activeWidget) {
       const actionActiveWidget = document.querySelector(
@@ -139,7 +134,7 @@ function App() {
       // const color = chroma(data.color);
       return {
         ...styles,
-        backgroundColor: isFocused ? '#999999' : isSelected ? '#2b2b2b' : '#2b2b2b',
+        backgroundColor: isFocused ? '#555555' : isSelected ? '#2b2b2b' : '#2b2b2b',
         color: '#ffffff',
       };
     },
@@ -191,7 +186,7 @@ function App() {
               <IsfChart
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection}
+                landsection={landSection === null ? '' : landSection.name}
               />
             </CalciteTab>
 
@@ -200,7 +195,7 @@ function App() {
               <ExpropriationList
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection}
+                landsection={landSection === null ? '' : landSection.name}
               />
             </CalciteTab>
 
@@ -209,7 +204,7 @@ function App() {
               <LotIssueList
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection}
+                landsection={landSection === null ? '' : landSection.name}
               />
             </CalciteTab>
           </div>
@@ -253,7 +248,7 @@ function App() {
               <br />
               <b style={{ color: 'white', margin: 10, fontSize: '0.9vw' }}></b>
               <Select
-                placeholder="Select Type"
+                placeholder="Select Stations/Area"
                 value={landSection}
                 options={landSectionList}
                 onChange={handleLandSectionChange}
