@@ -28,8 +28,8 @@ import { zoomToLayer } from './Query';
 import { lotLayer } from './layers';
 import LotChart from './components/LotChart';
 import { DropDownData } from './customClass';
-import ExpropriationList from './components/ExpropriationList';
-import LotIssueList from './components/LotIssueList';
+//import ExpropriationList from './components/ExpropriationList';
+// import LotIssueList from './components/LotIssueList';
 import LotProgressChart from './components/LotProgressChart';
 
 function App() {
@@ -53,9 +53,14 @@ function App() {
   const [landSectionList, setLandSectionList] = useState([]);
   const [landTypeSelected, setLandTypeSelected] = useState({ name: '' });
 
+  // Tab change
+  const [tabCheckedName, setTabCheckedName] = useState('Land');
+
   // loadable for code splitting
   const IsfChart = loadable(() => import('./components/IsfChart'));
   const StructureChart = loadable(() => import('./components/StructureChart'));
+  const ExpropriationList = loadable(() => import('./components/ExpropriationList'));
+  const LotIssueList = loadable(() => import('./components/LotIssueList'));
 
   //**** Create dropdonw list */
   useEffect(() => {
@@ -155,7 +160,13 @@ function App() {
       <CalciteShell>
         <CalciteTabs slot="panel-end" style={{ width: '27vw' }}>
           <div id="chartPanel" style={{ height: '100%' }}>
-            <CalciteTabNav slot="tab-nav" id="thetabs">
+            <CalciteTabNav
+              slot="tab-nav"
+              id="thetabs"
+              onCalciteTabChange={(event) =>
+                setTabCheckedName(event.target.selectedTitle.className)
+              }
+            >
               <CalciteTabTitle class="Land">Land</CalciteTabTitle>
               <CalciteTabTitle class="Structure">Structure</CalciteTabTitle>
               <CalciteTabTitle class="NLO">ISF</CalciteTabTitle>
@@ -171,41 +182,50 @@ function App() {
                 typelist={landSectionList}
               />
             </CalciteTab>
+
             {/* CalciteTab: Structure */}
             <CalciteTab>
-              <StructureChart
-                contractp={contractPackage === null ? '' : contractPackage.field1}
-                landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection.name}
-                typelist={landSectionList}
-              />
+              {tabCheckedName === 'Structure' && (
+                <StructureChart
+                  contractp={contractPackage === null ? '' : contractPackage.field1}
+                  landtype={landTypeSelected.name}
+                  landsection={landSection === null ? '' : landSection.name}
+                  typelist={landSectionList}
+                />
+              )}
             </CalciteTab>
 
             {/* CalciteTab: Non-Land Owner */}
             <CalciteTab>
-              <IsfChart
-                contractp={contractPackage === null ? '' : contractPackage.field1}
-                landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection.name}
-              />
+              {tabCheckedName === 'NLO' && (
+                <IsfChart
+                  contractp={contractPackage === null ? '' : contractPackage.field1}
+                  landtype={landTypeSelected.name}
+                  landsection={landSection === null ? '' : landSection.name}
+                />
+              )}
             </CalciteTab>
 
             {/* CalciteTab: List of Lots under Expropriation */}
             <CalciteTab>
-              <ExpropriationList
-                contractp={contractPackage === null ? '' : contractPackage.field1}
-                landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection.name}
-              />
+              {tabCheckedName === 'ExproList' && (
+                <ExpropriationList
+                  contractp={contractPackage === null ? '' : contractPackage.field1}
+                  landtype={landTypeSelected.name}
+                  landsection={landSection === null ? '' : landSection.name}
+                />
+              )}
             </CalciteTab>
 
             {/* CalciteTab: List of Lots with issues */}
             <CalciteTab>
-              <LotIssueList
-                contractp={contractPackage === null ? '' : contractPackage.field1}
-                landtype={landTypeSelected.name}
-                landsection={landSection === null ? '' : landSection.name}
-              />
+              {tabCheckedName === 'IssueList' && (
+                <LotIssueList
+                  contractp={contractPackage === null ? '' : contractPackage.field1}
+                  landtype={landTypeSelected.name}
+                  landsection={landSection === null ? '' : landSection.name}
+                />
+              )}
             </CalciteTab>
           </div>
         </CalciteTabs>

@@ -373,8 +373,6 @@ export async function generateLotProgress(contractp: any, landtype: any, landsec
   } else if (contractp && landtype && !landsection) {
     query.where = qStatus + ' AND ' + qCpLandType;
   } else {
-    console.log('test');
-    console.log(contractp, '; ', landtype, '; ', landsection);
     query.where = qStatus + ' AND ' + qCpLandTypeSection;
   }
 
@@ -395,7 +393,6 @@ export async function generateLotProgress(contractp: any, landtype: any, landsec
         value: count,
       });
     });
-    console.log(data);
     return data;
   });
 }
