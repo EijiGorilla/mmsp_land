@@ -5,7 +5,6 @@ import LayerList from '@arcgis/core/widgets/LayerList';
 import Search from '@arcgis/core/widgets/Search';
 import Expand from '@arcgis/core/widgets/Expand';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
-import LayerSearchSource from '@arcgis/core/widgets/Search/LayerSearchSource';
 import {
   lotLayer,
   structureLayer,
@@ -24,7 +23,6 @@ import {
   handedOverLotLayer,
   pteLotSubteLayer,
 } from './layers';
-import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 
 export const map = new Map({
   basemap: 'dark-gray-vector', // "streets-night-vector", basemap

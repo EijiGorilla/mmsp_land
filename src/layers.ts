@@ -127,10 +127,6 @@ const defaultSymbolLot = new SimpleFillSymbol({
   }),
 });
 
-let defaultRendererLot = new SimpleRenderer({
-  symbol: defaultSymbolLot,
-});
-
 const lotLayerStatusRenderer = new UniqueValueRenderer({
   field: 'StatusNVS3',
   defaultSymbol: defaultSymbolLot,
@@ -184,7 +180,6 @@ const lotLabel = new LabelClass({
   symbol: new TextSymbol({
     color: 'black',
     font: {
-      family: 'Gill Sans',
       size: 8,
     },
   }),
@@ -204,7 +199,6 @@ export const lotLayer = new FeatureLayer({
   layerId: 1,
   outFields: ['*'],
   title: 'Land Acquisition',
-  // labelsVisible: false,
   labelingInfo: [lotLabel],
   renderer: lotLayerStatusRenderer,
   popupTemplate: {
