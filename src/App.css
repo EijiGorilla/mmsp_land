@@ -265,3 +265,8 @@ calcite-tabs {
   margin-left: -10px;
   padding-right: 5px;
 }
+
+/* Progress Chart */
+calcite-label {
+  font-size: large;
+}

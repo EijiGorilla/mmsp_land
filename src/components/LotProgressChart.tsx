@@ -4,6 +4,11 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5themes_Responsive from '@amcharts/amcharts5/themes/Responsive';
 import { generateLotProgress } from '../Query';
+import {
+  CalciteLabel,
+  CalciteRadioButton,
+  CalciteRadioButtonGroup,
+} from '@esri/calcite-components-react';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
@@ -14,20 +19,20 @@ function maybeDisposeRoot(divId: any) {
   });
 }
 
+// https://www.amcharts.com/docs/v5/tutorials/dynamically-switching-data-set-for-an-xychart/
 const LotProgressChart = ({ contractp, landtype, landsection, nextWidget }: any) => {
-  const barSeriesRef = useRef<unknown | any | undefined>({});
-  const legendRef = useRef<unknown | any | undefined>({});
   const xAxisRef = useRef<unknown | any | undefined>({});
   const yAxisRef = useRef<unknown | any | undefined>({});
   const chartRef = useRef<unknown | any | undefined>({});
   const [lotProgressData, setLotProgressData] = useState([]);
+  const [yearSelected, setYearSelected] = useState<any>();
 
   const chartID = 'lot-progress';
   useEffect(() => {
-    generateLotProgress(contractp, landtype, landsection).then((result: any) => {
+    generateLotProgress(yearSelected, contractp, landtype, landsection).then((result: any) => {
       setLotProgressData(result);
     });
-  }, [contractp, landtype, landsection]);
+  }, [contractp, landtype, landsection, yearSelected]);
 
   useEffect(() => {
     maybeDisposeRoot(chartID);
@@ -35,7 +40,6 @@ const LotProgressChart = ({ contractp, landtype, landsection, nextWidget }: any)
     root.container.children.clear();
     root._logo?.dispose();
 
-    console.log(lotProgressData);
     // Set themesf
     // https://www.amcharts.com/docs/v5/concepts/themes/
     root.setThemes([am5themes_Animated.new(root), am5themes_Responsive.new(root)]);
@@ -177,19 +181,63 @@ const LotProgressChart = ({ contractp, landtype, landsection, nextWidget }: any)
   return (
     <>
       <div
-        id={chartID}
+        id="chartAlignDiv"
         style={{
-          height: '32vh',
-          width: '60%',
-          backgroundColor: '#2b2b2b',
-          color: 'white',
-          position: 'absolute',
-          zIndex: 99,
-          bottom: 10,
-          marginLeft: '1vw',
-          marginRight: 'auto',
+          display: 'flex',
+          border: 'solid 1px gray',
+          marginRight: '10px',
+          marginLeft: '10px',
         }}
-      ></div>
+      >
+        <div
+          id="selection"
+          style={{ marginBottom: 'auto', paddingTop: '15px', paddingLeft: '10px' }}
+        >
+          <CalciteRadioButtonGroup name="Options" layout="vertical">
+            <CalciteLabel layout="inline" scale="s">
+              <CalciteRadioButton
+                value="All"
+                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
+              ></CalciteRadioButton>
+              All
+            </CalciteLabel>
+            <CalciteLabel layout="inline" scale="s">
+              <CalciteRadioButton
+                value="2021"
+                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
+              ></CalciteRadioButton>
+              2021
+            </CalciteLabel>
+            <CalciteLabel layout="inline" scale="s">
+              <CalciteRadioButton
+                value="2022"
+                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
+              ></CalciteRadioButton>
+              2022
+            </CalciteLabel>
+            <CalciteLabel layout="inline" scale="s">
+              <CalciteRadioButton
+                value="2023"
+                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
+              ></CalciteRadioButton>
+              2023
+            </CalciteLabel>
+          </CalciteRadioButtonGroup>
+        </div>
+
+        <div
+          id={chartID}
+          style={{
+            height: '32vh',
+            width: '100%',
+            backgroundColor: '#2b2b2b',
+            color: 'white',
+            bottom: 50,
+            marginLeft: '0.3vw',
+            marginRight: 'auto',
+          }}
+        ></div>
+      </div>
     </>
   );
 };

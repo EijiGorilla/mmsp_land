@@ -349,31 +349,55 @@ export async function generateLotMoaData() {
 }
 
 // For monthly progress chart of lot
-export async function generateLotProgress(contractp: any, landtype: any, landsection: any) {
+export async function generateLotProgress(
+  yearSelected: any,
+  contractp: any,
+  landtype: any,
+  landsection: any,
+) {
   var total_count_handover = new StatisticDefinition({
     onStatisticField: 'HandOverDate',
     outStatisticFieldName: 'total_count_handover',
     statisticType: 'count',
   });
+  console.log(yearSelected);
+  // let year;
+  let years: any;
+  years = Number(yearSelected);
 
   var query = lotLayer.createQuery();
   query.outStatistics = [total_count_handover];
   // eslint-disable-next-line no-useless-concat
   const qStatus = 'HandOverDate IS NOT NULL';
+  const qYear = 'HandedOverYear = ' + years;
   const qCP = "Package = '" + contractp + "'";
+  const qYearCp = qYear + ' AND ' + qCP;
   const qLandType = "Type = '" + landtype + "'";
   const qCpLandType = qCP + ' AND ' + qLandType;
+  const qYearCpLandType = qYear + ' AND ' + qCpLandType;
   const qLandSection = "Station1 ='" + landsection + "'";
   const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
+  const qYearCpLandTypeSection = qYear + ' AND ' + qCpLandTypeSection;
 
-  if (!contractp) {
+  // When year is undefined,
+  if (!years && !contractp) {
     query.where = qStatus;
-  } else if (contractp && !landtype && !landsection) {
+  } else if (!years && contractp && !landtype) {
     query.where = qStatus + ' AND ' + qCP;
-  } else if (contractp && landtype && !landsection) {
+  } else if (!years && contractp && landtype && !landsection) {
     query.where = qStatus + ' AND ' + qCpLandType;
-  } else {
+  } else if (!years && contractp && landtype && landsection) {
     query.where = qStatus + ' AND ' + qCpLandTypeSection;
+
+    // When year is defined,
+  } else if (years && !contractp) {
+    query.where = qStatus + ' AND ' + qYear;
+  } else if (years && contractp && !landtype && !landsection) {
+    query.where = qStatus + ' AND ' + qYearCp;
+  } else if (years && contractp && landtype && !landsection) {
+    query.where = qStatus + ' AND ' + qYearCpLandType;
+  } else if (years && contractp && landtype && landsection) {
+    query.where = qStatus + ' AND ' + qYearCpLandTypeSection;
   }
 
   query.outFields = ['HandOverDate'];
