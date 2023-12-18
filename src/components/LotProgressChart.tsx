@@ -26,6 +26,7 @@ const LotProgressChart = ({ contractp, landtype, landsection, nextWidget }: any)
   const chartRef = useRef<unknown | any | undefined>({});
   const [lotProgressData, setLotProgressData] = useState([]);
   const [yearSelected, setYearSelected] = useState<any>();
+  const years = ['All', '2021', '2022', '2023'];
 
   const chartID = 'lot-progress';
   useEffect(() => {
@@ -194,34 +195,18 @@ const LotProgressChart = ({ contractp, landtype, landsection, nextWidget }: any)
           style={{ marginBottom: 'auto', paddingTop: '15px', paddingLeft: '10px' }}
         >
           <CalciteRadioButtonGroup name="Options" layout="vertical">
-            <CalciteLabel layout="inline" scale="s">
-              <CalciteRadioButton
-                value="All"
-                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
-              ></CalciteRadioButton>
-              All
-            </CalciteLabel>
-            <CalciteLabel layout="inline" scale="s">
-              <CalciteRadioButton
-                value="2021"
-                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
-              ></CalciteRadioButton>
-              2021
-            </CalciteLabel>
-            <CalciteLabel layout="inline" scale="s">
-              <CalciteRadioButton
-                value="2022"
-                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
-              ></CalciteRadioButton>
-              2022
-            </CalciteLabel>
-            <CalciteLabel layout="inline" scale="s">
-              <CalciteRadioButton
-                value="2023"
-                onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
-              ></CalciteRadioButton>
-              2023
-            </CalciteLabel>
+            {years &&
+              years.map((year: string, index: any) => {
+                return (
+                  <CalciteLabel layout="inline" scale="s" key={index}>
+                    <CalciteRadioButton
+                      value={year}
+                      onCalciteRadioButtonChange={(event) => setYearSelected(event.target.value)}
+                    ></CalciteRadioButton>
+                    {year}
+                  </CalciteLabel>
+                );
+              })}
           </CalciteRadioButtonGroup>
         </div>
 
