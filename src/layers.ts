@@ -116,6 +116,7 @@ const lotColor = [
   [255, 170, 0],
   [255, 0, 0],
   [0, 115, 76],
+  '#55FF00',
 ];
 
 const defaultSymbolLot = new SimpleFillSymbol({
@@ -171,6 +172,13 @@ const lotLayerStatusRenderer = new UniqueValueRenderer({
       label: 'with WOP Fully Turned-over',
       symbol: new SimpleFillSymbol({
         color: lotColor[5],
+      }),
+    },
+    {
+      value: 7,
+      label: 'ROWUA/TUA',
+      symbol: new SimpleFillSymbol({
+        color: lotColor[6],
       }),
     },
   ],
