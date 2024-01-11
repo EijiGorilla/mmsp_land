@@ -243,13 +243,13 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
       const statusSelect = find?.value;
 
       var highlightSelect: any;
-      var query = lotLayer.createQuery();
+      var query = structureLayer.createQuery();
 
       view.when(function () {
-        view.whenLayerView(lotLayer).then((layerView): any => {
+        view.whenLayerView(structureLayer).then((layerView): any => {
           //chartLayerView = layerView;
 
-          lotLayer.queryFeatures(query).then((results: any) => {
+          structureLayer.queryFeatures(query).then((results: any) => {
             const RESULT_LENGTH = results.features;
             const ROW_N = RESULT_LENGTH.length;
 
