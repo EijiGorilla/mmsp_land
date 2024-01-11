@@ -403,9 +403,14 @@ function App() {
                   <li>
                     <b>Lots with issues</b> are available in the 'IssueList' tab.
                   </li>
+                  <br></br>
+                  <br></br>
+                  <b style={{ color: 'white' }}>---:Defintion of Terms:---</b>
                   <li>
-                    Click/unclick widgets icon for viewing Layer list, legend, basemaps, and locate
-                    widgets under the main title.
+                    <b>ROWUA</b> : Right of Way Usage Agreement
+                  </li>
+                  <li>
+                    <b>NVS</b> : Negotiated Voluntary Sale
                   </li>
                 </ul>
               </div>
