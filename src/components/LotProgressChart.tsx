@@ -26,7 +26,7 @@ const LotProgressChart = ({ contractp, landtype, landsection, nextWidget }: any)
   const chartRef = useRef<unknown | any | undefined>({});
   const [lotProgressData, setLotProgressData] = useState([]);
   const [yearSelected, setYearSelected] = useState<any>();
-  const years = ['All', '2021', '2022', '2023'];
+  const years = ['All', '2021', '2022', '2023', '2024'];
 
   const chartID = 'lot-progress';
   useEffect(() => {
