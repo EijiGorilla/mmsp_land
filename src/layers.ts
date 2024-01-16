@@ -5,6 +5,16 @@ import UniqueValueRenderer from '@arcgis/core/renderers/UniqueValueRenderer';
 import SimpleRenderer from '@arcgis/core/renderers/SimpleRenderer';
 import { SimpleMarkerSymbol, TextSymbol, SimpleLineSymbol } from '@arcgis/core/symbols';
 
+/* Standalone table for Dates */
+export const dateTable = new FeatureLayer({
+  portalItem: {
+    id: '8a7097f019e14e488e31235519a963fd',
+    portal: {
+      url: 'https://gis.railway-sector.com/portal',
+    },
+  },
+});
+
 /* Station Box */
 // let stationBoxRenderer = new UniqueValueRenderer({
 //   field: 'Layer',

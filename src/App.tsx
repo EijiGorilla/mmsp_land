@@ -24,7 +24,7 @@ import {
   CalciteListItem,
 } from '@esri/calcite-components-react';
 import loadable from '@loadable/component';
-import { zoomToLayer } from './Query';
+import { dateUpdate, zoomToLayer } from './Query';
 import { lotLayer } from './layers';
 import LotChart from './components/LotChart';
 import { DropDownData } from './customClass';
@@ -33,6 +33,8 @@ import { DropDownData } from './customClass';
 import LotProgressChart from './components/LotProgressChart';
 
 function App() {
+  const [asOfDate, setAsOfDate] = useState<undefined | any | unknown>(null);
+
   //**** Set states */
   const mapDiv = useRef(null);
   const layerListDiv = useRef<HTMLDivElement | undefined | any>(null);
@@ -71,6 +73,10 @@ function App() {
 
     dropdownData.dropDownQuery().then((response: any) => {
       setInitCpTypeSection(response);
+    });
+
+    dateUpdate().then((response: any) => {
+      setAsOfDate(response);
     });
   }, []);
 
@@ -242,7 +248,7 @@ function App() {
             style={{ marginBottom: 'auto', marginTop: 'auto' }}
           />
           <b className="headerTitle">MMSP LAND</b>
-          <div className="date">As of January 15, 2024</div>
+          <div className="date">{!asOfDate ? '' : 'As of ' + asOfDate}</div>
 
           <div className="dropdownFilter">
             <div className="dropdownFilterLayout">
