@@ -329,6 +329,20 @@ export const pteLotSubteLayer = new FeatureLayer({
   popupEnabled: false,
 });
 
+/* Handed-Over Subterranean Lot for PTE summary */
+export const pteLotSubteLayer1 = new FeatureLayer({
+  portalItem: {
+    id: '7e20edfba96e4854acd716cbadf5f57f',
+    portal: {
+      url: 'https://gis.railway-sector.com/portal',
+    },
+  },
+  layerId: 1,
+  outFields: ['*'],
+  // eslint-disable-next-line no-useless-concat
+  definitionExpression: "Type = 'Subterranean'",
+});
+
 /* Structure Layer */
 const colorStructure = [
   [112, 173, 71], // Paid #70AD47

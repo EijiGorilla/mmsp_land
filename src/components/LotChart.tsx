@@ -15,6 +15,7 @@ import {
   generateLotData,
   generateLotMoaData,
   generateLotNumber,
+  generatePTE,
   statusLotChartQuery,
   statusMoaLotChartQuery,
   thousands_separators,
@@ -50,6 +51,8 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
   const [lotNumber, setLotNumber] = useState([]);
   const [handedOverNumber, setHandedOverNumber] = useState([]);
+  const [pteNumber, setPteNumber] = useState([]);
+  const [totalHandedOverPteNumber, setTotalHandedOverPteNumber] = useState([]);
 
   // 2.Mode of Acquisition
   const barSeriesRef = useRef<unknown | any | undefined>({});
@@ -87,6 +90,11 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
     generateHandedOver().then((response: any) => {
       setHandedOverNumber(response);
+    });
+
+    // PTE for Subterranean
+    generatePTE().then((response: any) => {
+      setPteNumber(response);
     });
 
     // Mode of Acquisition

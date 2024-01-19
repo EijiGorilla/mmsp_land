@@ -1,4 +1,4 @@
-import { dateTable, isfLayer, lotLayer, structureLayer } from './layers';
+import { dateTable, isfLayer, lotLayer, pteLotSubteLayer1, structureLayer } from './layers';
 import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import * as am5 from '@amcharts/amcharts5';
 import { view } from './Scene';
@@ -336,6 +336,89 @@ export async function generateHandedOver() {
   });
 }
 
+export async function generatePTE() {
+  var total_pte_lot = new StatisticDefinition({
+    onStatisticField: 'CASE WHEN PTE = 1 THEN 1 ELSE 0 END',
+    outStatisticFieldName: 'total_pte_lot',
+    statisticType: 'sum',
+  });
+
+  var total_lot_N = new StatisticDefinition({
+    onStatisticField: 'ID',
+    outStatisticFieldName: 'total_lot_N',
+    statisticType: 'count',
+  });
+
+  var query = pteLotSubteLayer1.createQuery();
+  query.outStatistics = [total_pte_lot, total_lot_N];
+
+  return pteLotSubteLayer1.queryFeatures(query).then((response: any) => {
+    var stats = response.features[0].attributes;
+    const handedover = stats.total_pte_lot;
+    const totaln = stats.total_lot_N;
+    const percent = ((handedover / totaln) * 100).toFixed(0);
+    return [percent, handedover];
+  });
+}
+
+export async function generateHandedOverPTE() {
+  var total_handedover_lot = new StatisticDefinition({
+    onStatisticField: 'CASE WHEN HandedOver = 1 THEN 1 ELSE 0 END',
+    outStatisticFieldName: 'total_handedover_lot',
+    statisticType: 'sum',
+  });
+
+  var total_pte_lot = new StatisticDefinition({
+    onStatisticField: 'CASE WHEN PTE = 1 THEN 1 ELSE 0 END',
+    outStatisticFieldName: 'total_pte_lot',
+    statisticType: 'sum',
+  });
+
+  var total_number_handedover = new StatisticDefinition({
+    onStatisticField: "CASE WHEN Type = 'Station' THEN 1 ELSE 0 END",
+    outStatisticFieldName: 'total_number_handedover',
+    statisticType: 'count',
+  });
+
+  var total_number_pte = new StatisticDefinition({
+    onStatisticField: "CASE WHEN Type = 'Subterranean' THEN 1 ELSE 0 END",
+    outStatisticFieldName: 'total_number_pte',
+    statisticType: 'sum',
+  });
+
+  var query = lotLayer.createQuery();
+  query.outStatistics = [total_handedover_lot, total_number_handedover];
+
+  const qHandedOver: any = lotLayer.queryFeatures(query).then((response: any) => {
+    var stats = response.features[0].attributes;
+    const handedover = stats.total_handedover_lot;
+    const totaln = stats.total_lot_N;
+    // const percent = ((handedover / totaln) * 100).toFixed(0);
+    return [handedover, totaln];
+  });
+
+  var query2 = pteLotSubteLayer1.createQuery();
+  query2.outStatistics = [total_pte_lot, total_number_pte];
+
+  const qPte: any = pteLotSubteLayer1.queryFeatures(query2).then((response: any) => {
+    var stats = response.features[0].attributes;
+    const pte = stats.total_pte_lot;
+    const totaln = stats.total_lot_N;
+    // const percent = ((handedover / totaln) * 100).toFixed(0);
+    return [pte, totaln];
+  });
+
+  // concat
+  const handedOver = await qHandedOver;
+  const pte = await qPte;
+
+  const totalHandedOverPte = handedOver[0] + pte[0];
+  const totalNumber = handedOver[1] + pte[1];
+  const totalPercentHandedOverPte = ((totalHandedOverPte / totalNumber) * 100).toFixed(0);
+
+  return [totalPercentHandedOverPte, totalHandedOverPte];
+}
+
 export async function generateLotMoaData() {
   var total_nvs_lot = new StatisticDefinition({
     onStatisticField: 'CASE WHEN S_MOA = 1 THEN 1 ELSE 0 END',
@@ -662,7 +745,7 @@ export async function generateIsfData() {
         category: statusNlo[0],
         value: unrelocate,
         sliceSettings: {
-          fill: am5.color('#00C5FF'),
+          fill: am5.color('#ff0000'),
         },
       },
       {
