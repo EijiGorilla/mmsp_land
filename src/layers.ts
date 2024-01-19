@@ -555,8 +555,8 @@ let isfRenderer = new UniqueValueRenderer({
       }),
     },
     {
-      value: 'FOR RELOCATION',
-      label: 'For Relocation',
+      value: 'UNRELOCATED',
+      label: 'Unrelocated',
       symbol: new SimpleMarkerSymbol({
         size: 9,
         color: colorIsf[1], // the first two letters dictate transparency.
