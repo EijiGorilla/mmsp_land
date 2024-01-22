@@ -357,6 +357,7 @@ export async function generatePTE() {
     const handedover = stats.total_pte_lot;
     const totaln = stats.total_lot_N;
     const percent = ((handedover / totaln) * 100).toFixed(0);
+    console.log(handedover, '; ', totaln);
     return [percent, handedover];
   });
 }
@@ -392,7 +393,7 @@ export async function generateHandedOverPTE() {
   const qHandedOver: any = lotLayer.queryFeatures(query).then((response: any) => {
     var stats = response.features[0].attributes;
     const handedover = stats.total_handedover_lot;
-    const totaln = stats.total_lot_N;
+    const totaln = stats.total_number_handedover;
     // const percent = ((handedover / totaln) * 100).toFixed(0);
     return [handedover, totaln];
   });
@@ -403,7 +404,7 @@ export async function generateHandedOverPTE() {
   const qPte: any = pteLotSubteLayer1.queryFeatures(query2).then((response: any) => {
     var stats = response.features[0].attributes;
     const pte = stats.total_pte_lot;
-    const totaln = stats.total_lot_N;
+    const totaln = stats.total_number_pte;
     // const percent = ((handedover / totaln) * 100).toFixed(0);
     return [pte, totaln];
   });
@@ -668,52 +669,6 @@ export async function generateStrucNumber() {
     const totalpie = stats.total_pie_structure;
     const percDemolished = Number(((demolished / totalnDemolished) * 100).toFixed(0));
     return [percDemolished, demolished, totaln, totalpie];
-  });
-}
-
-export async function generateStrucMoaData() {
-  var total_nvs_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN S_MOA = 1 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_nvs_struc',
-    statisticType: 'sum',
-  });
-
-  var total_expro_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN S_MOA = 2 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_expro_struc',
-    statisticType: 'sum',
-  });
-
-  var total_rowua_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN S_MOA = 3 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_rowua_struc',
-    statisticType: 'sum',
-  });
-
-  var query = lotLayer.createQuery();
-  query.outStatistics = [total_nvs_struc, total_expro_struc, total_rowua_struc];
-  query.returnGeometry = true;
-  return lotLayer.queryFeatures(query).then((response: any) => {
-    var stats = response.features[0].attributes;
-    const nvs = stats.total_nvs_struc;
-    const expro = stats.total_expro_struc;
-    const rowua = stats.total_rowua_struc;
-
-    const compile = [
-      {
-        category: statusMoaStructure[0],
-        value: nvs,
-      },
-      {
-        category: statusMoaStructure[1],
-        value: expro,
-      },
-      {
-        category: statusMoaStructure[2],
-        value: rowua,
-      },
-    ];
-    return compile;
   });
 }
 

@@ -595,6 +595,30 @@ export const isfLayer = new FeatureLayer({
   outFields: ['*'],
   renderer: isfRenderer,
   labelsVisible: false,
+  popupTemplate: {
+    title: '<p>{ID}</p>',
+    lastEditInfoEnabled: false,
+    returnGeometry: true,
+    content: [
+      {
+        type: 'fields',
+        fieldInfos: [
+          {
+            fieldName: 'Package',
+            label: 'CP',
+          },
+          {
+            fieldName: 'Station1',
+            label: 'Station',
+          },
+          {
+            fieldName: 'RELOCATION',
+            label: 'Status',
+          },
+        ],
+      },
+    ],
+  },
 });
 
 /* Construction Boundary */

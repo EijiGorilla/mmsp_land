@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { lotLayer } from '../layers';
+import { lotLayer, pteLotSubteLayer1 } from '../layers';
 import { view } from '../Scene';
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 import Query from '@arcgis/core/rest/support/Query';
@@ -12,6 +12,7 @@ import am5themes_Responsive from '@amcharts/amcharts5/themes/Responsive';
 import '../App.css';
 import {
   generateHandedOver,
+  generateHandedOverPTE,
   generateLotData,
   generateLotMoaData,
   generateLotNumber,
@@ -50,9 +51,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
   const chartID = 'pie-two';
 
   const [lotNumber, setLotNumber] = useState([]);
-  const [handedOverNumber, setHandedOverNumber] = useState([]);
-  const [pteNumber, setPteNumber] = useState([]);
-  const [totalHandedOverPteNumber, setTotalHandedOverPteNumber] = useState([]);
+  const [handedOverPteNumber, setHandedOverPteNumber] = useState([]);
 
   // 2.Mode of Acquisition
   const barSeriesRef = useRef<unknown | any | undefined>({});
@@ -70,12 +69,16 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
   if (!contractp) {
     lotLayer.definitionExpression = '1=1';
+    pteLotSubteLayer1.definitionExpression = '1=1';
   } else if (contractp && !landtype && !landsection) {
     lotLayer.definitionExpression = qCP;
+    pteLotSubteLayer1.definitionExpression = qCP;
   } else if (contractp && landtype && !landsection) {
     lotLayer.definitionExpression = qCpLandType;
+    pteLotSubteLayer1.definitionExpression = qCpLandType;
   } else {
     lotLayer.definitionExpression = qCpLandTypeSection;
+    pteLotSubteLayer1.definitionExpression = qCpLandTypeSection;
   }
 
   useEffect(() => {
@@ -88,14 +91,23 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
       setLotNumber(response);
     });
 
-    generateHandedOver().then((response: any) => {
-      setHandedOverNumber(response);
-    });
-
-    // PTE for Subterranean
-    generatePTE().then((response: any) => {
-      setPteNumber(response);
-    });
+    console.log(landtype);
+    if (!landtype) {
+      // Handed Over (Lot) + PTE (Subterranean)
+      generateHandedOverPTE().then((response: any) => {
+        setHandedOverPteNumber(response);
+      });
+    } else if (landtype === 'Station') {
+      // Handed Ove for Lot
+      generateHandedOver().then((response: any) => {
+        setHandedOverPteNumber(response);
+      });
+    } else if (landtype === 'Subterranean') {
+      // PTE for Subterranean
+      generatePTE().then((response: any) => {
+        setHandedOverPteNumber(response);
+      });
+    }
 
     // Mode of Acquisition
     generateLotMoaData().then((response: any) => {
@@ -549,17 +561,14 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
       ></div>
       <div className="handedOverNumberImage">
         <div>
-          <div className="handedOverLabel">HANDED-OVER</div>
+          <div className="handedOverLabel">HANDED-OVER / PTE</div>
           <br />
           <br />
           {/* if pte is 'Infinity, display 'N/A' else  */}
-          {handedOverNumber[0] === 'Infinity' ? (
-            <b className="handedOverNumber">N/A</b>
-          ) : (
-            <b className="handedOverNumber">
-              {handedOverNumber[0]}% ({thousands_separators(handedOverNumber[1])})
-            </b>
-          )}
+          <b className="handedOverNumber">
+            {handedOverPteNumber[0]}% (
+            {!handedOverPteNumber[1] ? 0 : thousands_separators(handedOverPteNumber[1])})
+          </b>
         </div>
         <img
           src="https://EijiGorilla.github.io/Symbols/Handed_Over_Logo.svg"
