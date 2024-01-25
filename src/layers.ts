@@ -596,7 +596,7 @@ export const isfLayer = new FeatureLayer({
   renderer: isfRenderer,
   labelsVisible: false,
   popupTemplate: {
-    title: '<p>{ID}</p>',
+    title: '<p>{Id}</p>',
     lastEditInfoEnabled: false,
     returnGeometry: true,
     content: [

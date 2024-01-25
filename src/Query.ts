@@ -287,7 +287,7 @@ export async function generateLotData() {
 
 export async function generateLotNumber() {
   var total_lot_number = new StatisticDefinition({
-    onStatisticField: 'ID',
+    onStatisticField: 'Id',
     outStatisticFieldName: 'total_lot_number',
     statisticType: 'count',
   });
@@ -319,7 +319,7 @@ export async function generateHandedOver() {
   });
 
   var total_lot_N = new StatisticDefinition({
-    onStatisticField: 'ID',
+    onStatisticField: 'Id',
     outStatisticFieldName: 'total_lot_N',
     statisticType: 'count',
   });
@@ -344,7 +344,7 @@ export async function generatePTE() {
   });
 
   var total_lot_N = new StatisticDefinition({
-    onStatisticField: 'ID',
+    onStatisticField: 'Id',
     outStatisticFieldName: 'total_lot_N',
     statisticType: 'count',
   });

@@ -73,7 +73,7 @@ const LotIssueList = ({ contractp, landtype, landsection }: any) => {
       // eslint-disable-next-line array-callback-return
       result.features.map((feature: any, index: any) => {
         const attributes = feature.attributes;
-        const lotid = attributes.ID;
+        const lotid = attributes.Id;
         const cp = attributes.Package;
         const landtype = attributes.Type;
         const issue = attributes.Issue;
