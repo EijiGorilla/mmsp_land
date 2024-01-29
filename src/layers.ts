@@ -708,7 +708,7 @@ export const bssDepotBuildingLayer = new FeatureLayer({
     //   url: 'https://gis.railway-sector.com/portal',
     // },
   },
-  layerId: 3,
+  layerId: 7,
   title: 'BSS Building',
   outFields: ['*'],
   popupEnabled: false,
