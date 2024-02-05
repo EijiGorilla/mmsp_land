@@ -209,12 +209,12 @@ const lotLabel = new LabelClass({
 
 export const lotLayer = new FeatureLayer({
   portalItem: {
-    id: '0c427a8b1db54a6dbaab8f534cffdd00',
+    id: '79d97f71d92649faaad08fc7680e40bf',
     // portal: {
     //   url: 'https://gis.railway-sector.com/portal',
     // },
   },
-  layerId: 14,
+  // layerId: 14,
   outFields: ['*'],
   title: 'Land Acquisition',
   labelingInfo: [lotLabel],
@@ -299,12 +299,12 @@ const handedOverRenderer = new SimpleRenderer({
 
 export const handedOverLotLayer = new FeatureLayer({
   portalItem: {
-    id: '0c427a8b1db54a6dbaab8f534cffdd00',
+    id: '79d97f71d92649faaad08fc7680e40bf',
     // portal: {
     //   url: 'https://gis.railway-sector.com/portal',
     // },
   },
-  layerId: 14,
+  // layerId: 14,
   outFields: ['*'],
   definitionExpression: 'HandedOver = 1',
   title: 'Handed-Over Lots',
@@ -315,12 +315,12 @@ export const handedOverLotLayer = new FeatureLayer({
 /* Handed-Over Subterranean Lot */
 export const pteLotSubteLayer = new FeatureLayer({
   portalItem: {
-    id: '0c427a8b1db54a6dbaab8f534cffdd00',
+    id: '79d97f71d92649faaad08fc7680e40bf',
     // portal: {
     //   url: 'https://gis.railway-sector.com/portal',
     // },
   },
-  layerId: 14,
+  // layerId: 14,
   outFields: ['*'],
   // eslint-disable-next-line no-useless-concat
   definitionExpression: "Type = 'Subterranean'" + ' AND ' + 'PTE = 1',
@@ -332,12 +332,12 @@ export const pteLotSubteLayer = new FeatureLayer({
 /* Handed-Over Subterranean Lot for PTE summary */
 export const pteLotSubteLayer1 = new FeatureLayer({
   portalItem: {
-    id: '0c427a8b1db54a6dbaab8f534cffdd00',
+    id: '79d97f71d92649faaad08fc7680e40bf',
     // portal: {
     //   url: 'https://gis.railway-sector.com/portal',
     // },
   },
-  layerId: 14,
+  // layerId: 14,
   outFields: ['*'],
   // eslint-disable-next-line no-useless-concat
   definitionExpression: "Type = 'Subterranean'",
