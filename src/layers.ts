@@ -16,87 +16,87 @@ export const dateTable = new FeatureLayer({
 });
 
 /* Station Box */
-// let stationBoxRenderer = new UniqueValueRenderer({
-//   field: 'Layer',
-//   uniqueValueInfos: [
-//     {
-//       value: 'U-Shape Retaining Wall',
-//       symbol: new SimpleFillSymbol({
-//         color: [104, 104, 104],
-//         style: 'backward-diagonal',
-//         outline: {
-//           width: 1,
-//           color: 'black',
-//         },
-//       }),
-//     },
-//     {
-//       value: 'Cut & Cover Box',
-//       symbol: new SimpleFillSymbol({
-//         color: [104, 104, 104],
-//         style: 'backward-diagonal',
-//         outline: {
-//           width: 1,
-//           color: 'black',
-//         },
-//       }),
-//     },
-//     {
-//       value: 'TBM Shaft',
-//       symbol: new SimpleFillSymbol({
-//         color: [104, 104, 104],
-//         style: 'backward-diagonal',
-//         outline: {
-//           width: 1,
-//           color: 'black',
-//         },
-//       }),
-//     },
-//     {
-//       value: 'TBM',
-//       symbol: new SimpleFillSymbol({
-//         color: [178, 178, 178],
-//         style: 'backward-diagonal',
-//         outline: {
-//           width: 0.5,
-//           color: 'black',
-//         },
-//       }),
-//     },
-//     {
-//       value: 'Station Platform',
-//       symbol: new SimpleFillSymbol({
-//         color: [240, 204, 230],
-//         style: 'backward-diagonal',
-//         outline: {
-//           width: 0.4,
-//           color: 'black',
-//         },
-//       }),
-//     },
-//     {
-//       value: 'Station Box',
-//       symbol: new SimpleFillSymbol({
-//         color: [0, 0, 0, 0],
-//         outline: {
-//           width: 2,
-//           color: 'red',
-//         },
-//       }),
-//     },
-//     {
-//       value: 'NATM',
-//       symbol: new SimpleFillSymbol({
-//         color: [178, 178, 178, 0],
-//         style: 'backward-diagonal',
-//         outline: {
-//           width: 0.5,
-//           color: 'grey',
-//         },
-//       }),
-//     },
-//   ],
-// });
+let stationBoxRenderer = new UniqueValueRenderer({
+  field: 'Layer',
+  uniqueValueInfos: [
+    {
+      value: 'U-Shape Retaining Wall',
+      symbol: new SimpleFillSymbol({
+        color: [104, 104, 104],
+        style: 'backward-diagonal',
+        outline: {
+          width: 1,
+          color: 'black',
+        },
+      }),
+    },
+    {
+      value: 'Cut & Cover Box',
+      symbol: new SimpleFillSymbol({
+        color: [104, 104, 104],
+        style: 'backward-diagonal',
+        outline: {
+          width: 1,
+          color: 'black',
+        },
+      }),
+    },
+    {
+      value: 'TBM Shaft',
+      symbol: new SimpleFillSymbol({
+        color: [104, 104, 104],
+        style: 'backward-diagonal',
+        outline: {
+          width: 1,
+          color: 'black',
+        },
+      }),
+    },
+    {
+      value: 'TBM',
+      symbol: new SimpleFillSymbol({
+        color: [178, 178, 178],
+        style: 'backward-diagonal',
+        outline: {
+          width: 0.5,
+          color: 'black',
+        },
+      }),
+    },
+    {
+      value: 'Station Platform',
+      symbol: new SimpleFillSymbol({
+        color: [240, 204, 230],
+        style: 'backward-diagonal',
+        outline: {
+          width: 0.4,
+          color: 'black',
+        },
+      }),
+    },
+    {
+      value: 'Station Box',
+      symbol: new SimpleFillSymbol({
+        color: [0, 0, 0, 0],
+        outline: {
+          width: 2,
+          color: 'red',
+        },
+      }),
+    },
+    {
+      value: 'NATM',
+      symbol: new SimpleFillSymbol({
+        color: [178, 178, 178, 0],
+        style: 'backward-diagonal',
+        outline: {
+          width: 0.5,
+          color: 'grey',
+        },
+      }),
+    },
+  ],
+});
 
 export const stationBoxLayer = new FeatureLayer({
   portalItem: {
@@ -105,8 +105,8 @@ export const stationBoxLayer = new FeatureLayer({
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 7,
-  // renderer: stationBoxRenderer,
+  layerId: 2,
+  renderer: stationBoxRenderer,
   minScale: 150000,
   maxScale: 0,
   title: 'Station Box',
