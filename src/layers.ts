@@ -8,7 +8,7 @@ import { SimpleMarkerSymbol, TextSymbol, SimpleLineSymbol } from '@arcgis/core/s
 /* Standalone table for Dates */
 export const dateTable = new FeatureLayer({
   portalItem: {
-    id: '3164bda41871462da3793d79fa90c8be',
+    id: 'a084d9cae5234d93b7aa50f7eb782aec',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -100,12 +100,12 @@ export const dateTable = new FeatureLayer({
 
 export const stationBoxLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '52d4f29105934e3f95f6b39c7e5fba6e',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 20,
+  layerId: 7,
   // renderer: stationBoxRenderer,
   minScale: 150000,
   maxScale: 0,
@@ -209,12 +209,12 @@ const lotLabel = new LabelClass({
 
 export const lotLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 14,
+  layerId: 8,
   outFields: ['*'],
   title: 'Land Acquisition',
   labelingInfo: [lotLabel],
@@ -273,12 +273,12 @@ const lotLayerBoundaryLabel = new LabelClass({
 
 export const lotLayerBoundary = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 17,
+  layerId: 8,
   outFields: ['*'],
   title: 'Lot Boundary',
   renderer: lotLayerBoundaryRenderer,
@@ -299,12 +299,12 @@ const handedOverRenderer = new SimpleRenderer({
 
 export const handedOverLotLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 14,
+  layerId: 8,
   outFields: ['*'],
   definitionExpression: 'HandedOver = 1',
   title: 'Handed-Over Lots',
@@ -315,12 +315,12 @@ export const handedOverLotLayer = new FeatureLayer({
 /* Handed-Over Subterranean Lot */
 export const pteLotSubteLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 14,
+  layerId: 8,
   outFields: ['*'],
   // eslint-disable-next-line no-useless-concat
   definitionExpression: "Type = 'Subterranean'" + ' AND ' + 'PTE = 1',
@@ -332,12 +332,12 @@ export const pteLotSubteLayer = new FeatureLayer({
 /* Handed-Over Subterranean Lot for PTE summary */
 export const pteLotSubteLayer1 = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 14,
+  layerId: 8,
   outFields: ['*'],
   // eslint-disable-next-line no-useless-concat
   definitionExpression: "Type = 'Subterranean'",
@@ -444,12 +444,12 @@ export const structureLayerRenderer = new UniqueValueRenderer({
 
 export const structureLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 18,
+  layerId: 9,
   title: 'Existing Structure',
   outFields: ['*'],
   renderer: structureLayerRenderer,
@@ -515,12 +515,12 @@ const structureDemolishedRenderer = new UniqueValueRenderer({
 
 export const structureDemolishedLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 18,
+  layerId: 9,
   title: 'Demolished Structure',
   outFields: ['*'],
   renderer: structureDemolishedRenderer,
@@ -585,12 +585,12 @@ let isfRenderer = new UniqueValueRenderer({
 
 export const isfLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 19,
+  layerId: 10,
   title: 'ISF (Informal Settlers Families)',
   outFields: ['*'],
   renderer: isfRenderer,
@@ -642,7 +642,7 @@ const ConstructionBoundaryFill = new UniqueValueRenderer({
 
 export const constructionBoundaryLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -661,12 +661,12 @@ export const constructionBoundaryLayer = new FeatureLayer({
 /* Alignment Line */
 export const alignmentLine = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '52d4f29105934e3f95f6b39c7e5fba6e',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 13,
+  layerId: 6,
   outFields: ['*'],
   title: 'Alignment',
   popupEnabled: false,
@@ -675,7 +675,7 @@ export const alignmentLine = new FeatureLayer({
 /* Segment DPWH */
 export const dpwhSegmentLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -689,7 +689,7 @@ export const dpwhSegmentLayer = new FeatureLayer({
 /* Depot Building */
 export const depotBuildingLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -703,7 +703,7 @@ export const depotBuildingLayer = new FeatureLayer({
 /* BSS Building */
 export const bssDepotBuildingLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -717,12 +717,12 @@ export const bssDepotBuildingLayer = new FeatureLayer({
 /* East Valenzuela */
 export const evsLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 9,
+  layerId: 1,
   title: 'East Valenzuela Station',
   outFields: ['*'],
   popupEnabled: false,
@@ -731,7 +731,7 @@ export const evsLayer = new FeatureLayer({
 /* NNC Construction boundary (Senate) */
 export const senateBoundaryLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '0c172b82ddab44f2bb439542dd75e8ae',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -759,7 +759,7 @@ const stationLabels = new LabelClass({
 
 export const stationLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '52d4f29105934e3f95f6b39c7e5fba6e',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
@@ -774,12 +774,12 @@ stationLayer.listMode = 'hide';
 
 export const creekDivLayer = new FeatureLayer({
   portalItem: {
-    id: 'b8c97bfdc9a8402684e9692cd7cbda07',
+    id: '52d4f29105934e3f95f6b39c7e5fba6e',
     portal: {
       url: 'https://gis.railway-sector.com/portal',
     },
   },
-  layerId: 10,
+  layerId: 3,
   title: 'Creek Diversion',
   outFields: ['*'],
   popupEnabled: false,
