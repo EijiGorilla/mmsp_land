@@ -5,6 +5,7 @@ import LayerList from '@arcgis/core/widgets/LayerList';
 import Search from '@arcgis/core/widgets/Search';
 import Expand from '@arcgis/core/widgets/Expand';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
+import Print from '@arcgis/core/widgets/Print';
 import {
   lotLayer,
   structureLayer,
@@ -162,3 +163,13 @@ const searchExpand = new Expand({
 view.ui.add(searchExpand, {
   position: 'top-right',
 });
+
+// Printer
+// const print = new Print({
+//   view: view,
+//   // specify your own print service
+//   printServiceUrl:
+//     'https://gis.railway-sector.com/server/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task',
+// });
+
+// view.ui.add(print, 'top-right');
