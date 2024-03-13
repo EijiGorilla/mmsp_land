@@ -24,6 +24,13 @@ br {
 
 /*https://developers.arcgis.com/calcite-design-system/foundations/colors/ */
 
+calcite-label {
+  --calcite-ui-text-1: #ffffff;
+  --calcite-font-size--1: 1.1rem;
+  /* margin-top: 1vh; */
+  margin-left: 15px;
+}
+
 calcite-action-bar {
   --calcite-ui-border-3: #555555;
   --calcite-ui-text-3: #bfbfbf;
@@ -75,11 +82,13 @@ calcite-avatar {
   margin-top: 0.15rem;
 }
 
-calcite-tab,
 calcite-tabs {
   --calcite-ui-border-3: #555555;
   --calcite-ui-border-2: #555555;
   --calcite-ui-border-1: #555555;
+  border-style: solid;
+  border-width: 0.7;
+  border-top: rgb(0, 0, 0, 0);
 }
 
 .esri-view .esri-view-surface--touch-none:focus::after {
@@ -116,10 +125,6 @@ calcite-tabs {
 }
 
 /* Lot Tab */
-.lotNumberImage {
-  display: flex;
-  padding-left: 20px;
-}
 
 .totalLotsLabel {
   color: white;
@@ -128,45 +133,25 @@ calcite-tabs {
   padding-top: 0.6vh;
 }
 
-.totalLotsNumber {
+.totalLotsNumber,
+.handedOverNumber {
   color: #6ede00;
-  font-size: 2.5vw;
+  font-size: 2rem;
   font-weight: bold;
   font-family: 'calibri';
+  margin-left: 4%;
 }
 
 .totalLotsNumber2 {
   color: white;
   font-size: 1vw;
   font-weight: normal;
-  padding-top: 0.5vh;
-}
-
-.handedOverNumberImage {
-  display: flex;
-  padding-left: 20px;
-  margin-bottom: 1.5vh;
 }
 
 .handedOverLabel {
   color: white;
   font-size: 1.1vw;
   padding-bottom: 0.6vh;
-}
-
-.handedOverNumber {
-  color: #6ede00;
-  font-size: 2.5vw;
-  font-weight: bold;
-  font-family: 'calibri';
-}
-
-.moaLotTitle {
-  color: white;
-  font-size: 1.1vw;
-  padding-bottom: 0.5vh;
-  padding-top: 0.6vh;
-  padding-left: 20px;
 }
 
 /* Structure Tab */

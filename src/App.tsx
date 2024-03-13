@@ -164,81 +164,86 @@ function App() {
   return (
     <div>
       <CalciteShell>
-        <CalciteTabs slot="panel-end" style={{ width: '27vw' }}>
-          <div id="chartPanel" style={{ height: '100%' }}>
-            <CalciteTabNav
-              slot="tab-nav"
-              id="thetabs"
-              onCalciteTabChange={(event) =>
-                setTabCheckedName(event.target.selectedTitle.className)
-              }
-            >
-              <CalciteTabTitle class="Land">Land</CalciteTabTitle>
-              <CalciteTabTitle class="Structure">Structure</CalciteTabTitle>
-              <CalciteTabTitle class="NLO">ISF</CalciteTabTitle>
-              <CalciteTabTitle class="ExproList">ExproList</CalciteTabTitle>
-              <CalciteTabTitle class="IssueList">IssueList</CalciteTabTitle>
-            </CalciteTabNav>
-            {/* CalciteTab: Lot */}
-            <CalciteTab>
-              <LotChart
+        <CalciteTabs slot="panel-end">
+          <CalciteTabNav
+            slot="title-group"
+            id="thetabs"
+            onCalciteTabChange={(event) => setTabCheckedName(event.target.selectedTitle.className)}
+          >
+            <CalciteTabTitle class="Land">Land</CalciteTabTitle>
+            <CalciteTabTitle class="Structure">Structure</CalciteTabTitle>
+            <CalciteTabTitle class="NLO">ISF</CalciteTabTitle>
+            <CalciteTabTitle class="ExproList">ExproList</CalciteTabTitle>
+            <CalciteTabTitle class="IssueList">IssueList</CalciteTabTitle>
+          </CalciteTabNav>
+          {/* CalciteTab: Lot */}
+          <CalciteTab>
+            <LotChart
+              contractp={contractPackage === null ? '' : contractPackage.field1}
+              landtype={landTypeSelected.name}
+              landsection={landSection === null ? '' : landSection.name}
+              typelist={landSectionList}
+            />
+          </CalciteTab>
+
+          {/* CalciteTab: Structure */}
+          <CalciteTab>
+            {tabCheckedName === 'Structure' && (
+              <StructureChart
                 contractp={contractPackage === null ? '' : contractPackage.field1}
                 landtype={landTypeSelected.name}
                 landsection={landSection === null ? '' : landSection.name}
                 typelist={landSectionList}
               />
-            </CalciteTab>
+            )}
+          </CalciteTab>
 
-            {/* CalciteTab: Structure */}
-            <CalciteTab>
-              {tabCheckedName === 'Structure' && (
-                <StructureChart
-                  contractp={contractPackage === null ? '' : contractPackage.field1}
-                  landtype={landTypeSelected.name}
-                  landsection={landSection === null ? '' : landSection.name}
-                  typelist={landSectionList}
-                />
-              )}
-            </CalciteTab>
+          {/* CalciteTab: Non-Land Owner */}
+          <CalciteTab>
+            {tabCheckedName === 'NLO' && (
+              <IsfChart
+                contractp={contractPackage === null ? '' : contractPackage.field1}
+                landtype={landTypeSelected.name}
+                landsection={landSection === null ? '' : landSection.name}
+              />
+            )}
+          </CalciteTab>
 
-            {/* CalciteTab: Non-Land Owner */}
-            <CalciteTab>
-              {tabCheckedName === 'NLO' && (
-                <IsfChart
-                  contractp={contractPackage === null ? '' : contractPackage.field1}
-                  landtype={landTypeSelected.name}
-                  landsection={landSection === null ? '' : landSection.name}
-                />
-              )}
-            </CalciteTab>
+          {/* CalciteTab: List of Lots under Expropriation */}
+          <CalciteTab>
+            {tabCheckedName === 'ExproList' && (
+              <ExpropriationList
+                contractp={contractPackage === null ? '' : contractPackage.field1}
+                landtype={landTypeSelected.name}
+                landsection={landSection === null ? '' : landSection.name}
+              />
+            )}
+          </CalciteTab>
 
-            {/* CalciteTab: List of Lots under Expropriation */}
-            <CalciteTab>
-              {tabCheckedName === 'ExproList' && (
-                <ExpropriationList
-                  contractp={contractPackage === null ? '' : contractPackage.field1}
-                  landtype={landTypeSelected.name}
-                  landsection={landSection === null ? '' : landSection.name}
-                />
-              )}
-            </CalciteTab>
-
-            {/* CalciteTab: List of Lots with issues */}
-            <CalciteTab>
-              {tabCheckedName === 'IssueList' && (
-                <LotIssueList
-                  contractp={contractPackage === null ? '' : contractPackage.field1}
-                  landtype={landTypeSelected.name}
-                  landsection={landSection === null ? '' : landSection.name}
-                />
-              )}
-            </CalciteTab>
-          </div>
+          {/* CalciteTab: List of Lots with issues */}
+          <CalciteTab>
+            {tabCheckedName === 'IssueList' && (
+              <LotIssueList
+                contractp={contractPackage === null ? '' : contractPackage.field1}
+                landtype={landTypeSelected.name}
+                landsection={landSection === null ? '' : landSection.name}
+              />
+            )}
+          </CalciteTab>
         </CalciteTabs>
+
+        {/* Header Panle */}
         <header
           slot="header"
           id="header-title"
-          style={{ display: 'flex', width: '100%', height: '70px', padding: '0 1rem' }}
+          style={{
+            display: 'flex',
+            width: '100%',
+            height: '70px',
+            padding: '0 1rem',
+            borderStyle: 'solid',
+            borderWidth: 1,
+          }}
         >
           <img
             src="https://EijiGorilla.github.io/Symbols/Projec_Logo/DOTr_Logo_v2.png"

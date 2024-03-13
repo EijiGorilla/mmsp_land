@@ -22,6 +22,15 @@ import {
   thousands_separators,
 } from '../Query';
 
+import {
+  CalciteBlock,
+  CalciteLabel,
+  CalcitePanel,
+  CalciteSwitch,
+  CalciteNavigation,
+  CalciteNavigationLogo,
+} from '@esri/calcite-components-react';
+
 // Dispose function
 function maybeDisposeRoot(divId: any) {
   am5.array.each(am5.registry.rootElements, function (root) {
@@ -532,24 +541,23 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
   return (
     <>
-      <div className="lotNumberImage">
-        <div>
-          <div className="totalLotsLabel">TOTAL LOTS</div>
-          <br />
-          <br />
-          <b className="totalLotsNumber">
-            {thousands_separators(lotNumber[1])}{' '}
-            <div className="totalLotsNumber2">({thousands_separators(lotNumber[0])})</div>
-          </b>
-        </div>
-        <img
-          src="https://EijiGorilla.github.io/Symbols/Land_logo.png"
-          alt="Land Logo"
-          height={'18%'}
-          width={'18%'}
-          style={{ padding: '10px', margin: 'auto' }}
-        />
-      </div>
+      {/* Total Lot Number */}
+      <CalciteLabel>TOTAL LOTS</CalciteLabel>
+      <CalciteLabel layout="inline">
+        <b className="totalLotsNumber">
+          {thousands_separators(lotNumber[1])}
+          <img
+            src="https://EijiGorilla.github.io/Symbols/Land_logo.png"
+            alt="Land Logo"
+            height={'21%'}
+            width={'21%'}
+            style={{ marginLeft: '105%', display: 'flex', marginTop: '-17%' }}
+          />
+          <div className="totalLotsNumber2">({thousands_separators(lotNumber[0])})</div>
+        </b>
+      </CalciteLabel>
+
+      {/* Lot Chart */}
       <div
         id={chartID}
         style={{
@@ -559,32 +567,33 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
           marginBottom: '-1.5vh',
         }}
       ></div>
-      <div className="handedOverNumberImage">
-        <div>
-          <div className="handedOverLabel">HANDED-OVER / PTE</div>
-          <br />
-          <br />
-          {/* if pte is 'Infinity, display 'N/A' else  */}
-          <b className="handedOverNumber">
-            {handedOverPteNumber[0]}% (
-            {!handedOverPteNumber[1] ? 0 : thousands_separators(handedOverPteNumber[1])})
-          </b>
-        </div>
-        <img
-          src="https://EijiGorilla.github.io/Symbols/Handed_Over_Logo.svg"
-          alt="Land Logo"
-          height={'18%'}
-          width={'18%'}
-          style={{ padding: '10px', margin: 'auto' }}
-        />
-      </div>
-      <div className="moaLotTitle">MODE OF ACQUISITION</div>
+
+      {/* Handed-Over/PTE */}
+      <CalciteLabel>HANDED-OVER / PTE</CalciteLabel>
+      <CalciteLabel layout="inline">
+        <b className="handedOverNumber">
+          {handedOverPteNumber[0]}% (
+          {!handedOverPteNumber[1] ? 0 : thousands_separators(handedOverPteNumber[1])})
+          <img
+            src="https://EijiGorilla.github.io/Symbols/Handed_Over_Logo.svg"
+            alt="Land Logo"
+            height={'15%'}
+            width={'15%'}
+            style={{ marginLeft: '70%', display: 'flex', marginTop: '-10%' }}
+          />
+        </b>
+      </CalciteLabel>
+
+      {/* Mode of Acquisition */}
+      <CalciteLabel>MODE OF ACQUISITION</CalciteLabel>
       <div
         id={chartID_moa}
         style={{
           height: '21vh',
           backgroundColor: 'rgb(0,0,0,0)',
           color: 'white',
+          marginTop: '-3%',
+          marginLeft: '5%',
         }}
       ></div>
     </>
