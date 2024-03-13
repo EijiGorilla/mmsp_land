@@ -22,14 +22,7 @@ import {
   thousands_separators,
 } from '../Query';
 
-import {
-  CalciteBlock,
-  CalciteLabel,
-  CalcitePanel,
-  CalciteSwitch,
-  CalciteNavigation,
-  CalciteNavigationLogo,
-} from '@esri/calcite-components-react';
+import { CalciteLabel } from '@esri/calcite-components-react';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
