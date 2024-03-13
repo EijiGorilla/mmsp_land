@@ -38,6 +38,7 @@ function App() {
   //**** Set states */
   const mapDiv = useRef(null);
   const layerListDiv = useRef<HTMLDivElement | undefined | any>(null);
+  const locatebtnDiv = useRef<HTMLDivElement | undefined | any>(null);
 
   // For Calcite Design
   const calcitePanelBasemaps = useRef<HTMLDivElement | undefined | any>(null);

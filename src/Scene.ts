@@ -6,6 +6,7 @@ import Search from '@arcgis/core/widgets/Search';
 import Expand from '@arcgis/core/widgets/Expand';
 import GroupLayer from '@arcgis/core/layers/GroupLayer';
 import Print from '@arcgis/core/widgets/Print';
+import Locate from '@arcgis/core/widgets/Locate.js';
 import {
   lotLayer,
   structureLayer,
@@ -163,6 +164,12 @@ const searchExpand = new Expand({
 view.ui.add(searchExpand, {
   position: 'top-right',
 });
+
+const locateBtn = new Locate({
+  view,
+  // container: undefined,
+});
+view.ui.add(locateBtn, { position: 'top-right' });
 
 // Printer
 // const print = new Print({
