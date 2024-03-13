@@ -154,9 +154,10 @@ function App() {
       ...defaultStyles,
       backgroundColor: '#2b2b2b',
       borderColor: '#949494',
-      height: 35,
-      width: '170px',
+      // height: 35,
+      // width: '170px',
       color: '#ffffff',
+      touchUi: false,
     }),
     singleValue: (defaultStyles: any) => ({ ...defaultStyles, color: '#fff' }),
   };

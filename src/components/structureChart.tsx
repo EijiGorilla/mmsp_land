@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react';
-import { lotLayer, structureLayer } from '../layers';
+import { structureLayer } from '../layers';
 import { view } from '../Scene';
 import FeatureFilter from '@arcgis/core/layers/support/FeatureFilter';
 import Query from '@arcgis/core/rest/support/Query';
@@ -14,6 +14,8 @@ import {
   thousands_separators,
   statusStructureChartQuery,
 } from '../Query';
+
+import { CalciteLabel } from '@esri/calcite-components-react';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
@@ -362,24 +364,23 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
 
   return (
     <>
-      <div className="lotNumberImage">
-        <div>
-          <div className="totalStructuresLabel">TOTAL STRUCTURES </div>
-          <br />
-          <br />
-          <b className="totalLotsNumber">
-            {thousands_separators(structureNumber[3])}{' '}
-            <div className="totalLotsNumber2">({thousands_separators(structureNumber[2])})</div>{' '}
-          </b>
-        </div>
-        <img
-          src="https://EijiGorilla.github.io/Symbols/House_Logo.svg"
-          alt="Structure Logo"
-          height={'19%'}
-          width={'19%'}
-          style={{ padding: '10px', margin: 'auto' }}
-        />
-      </div>
+      {/* Total Structure Number */}
+      <CalciteLabel>TOTAL STRUCTURES</CalciteLabel>
+      <CalciteLabel layout="inline">
+        <b className="totalLotsNumber">
+          {thousands_separators(structureNumber[3])}
+          <img
+            src="https://EijiGorilla.github.io/Symbols/House_Logo.svg"
+            alt="Structure Logo"
+            height={'35%'}
+            width={'35%'}
+            style={{ marginLeft: '155%', display: 'flex', marginTop: '-25%' }}
+          />
+          <div className="totalLotsNumber2">({thousands_separators(structureNumber[2])})</div>{' '}
+        </b>
+      </CalciteLabel>
+
+      {/* Structure Chart */}
       <div
         id={chartID}
         style={{
@@ -389,28 +390,34 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
           marginBottom: '-4.5vh',
         }}
       ></div>
-      <div className="structureNumberImage">
-        <div>
-          <div className="totalStructuresLabel">DEMOLISHED</div>
-          <br />
-          <br />
-          {/* If zero, display as zero else */}
-          {structureNumber[1] === 0 ? (
-            <b className="DemolishedNumber">{structureNumber[0]}% (0)</b>
-          ) : (
-            <b className="DemolishedNumber">
-              {structureNumber[0]}% ({thousands_separators(structureNumber[1])})
-            </b>
-          )}
-        </div>
-        <img
-          src="https://EijiGorilla.github.io/Symbols/Structure_Demolished.svg"
-          alt="Structure Logo"
-          height={'18%'}
-          width={'18%'}
-          style={{ padding: '10px', margin: 'auto' }}
-        />
-      </div>
+
+      {/* Demolished number */}
+      <CalciteLabel>DEMOLISHED</CalciteLabel>
+      <CalciteLabel layout="inline">
+        {structureNumber[1] === 0 ? (
+          <b className="DemolishedNumber">
+            {structureNumber[0]}% (0)
+            <img
+              src="https://EijiGorilla.github.io/Symbols/Structure_Demolished.svg"
+              alt="Structure Logo"
+              height={'15%'}
+              width={'15%'}
+              style={{ marginLeft: '70%', display: 'flex', marginTop: '-10%' }}
+            />
+          </b>
+        ) : (
+          <b className="DemolishedNumber">
+            {structureNumber[0]}% ({thousands_separators(structureNumber[1])})
+            <img
+              src="https://EijiGorilla.github.io/Symbols/Structure_Demolished.svg"
+              alt="Structure Logo"
+              height={'18%'}
+              width={'18%'}
+              style={{ marginLeft: '70%', display: 'flex', marginTop: '-10%' }}
+            />
+          </b>
+        )}
+      </CalciteLabel>
     </>
   );
 }); // End of lotChartgs

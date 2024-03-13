@@ -29,6 +29,7 @@ calcite-label {
   --calcite-font-size--1: 1.1rem;
   /* margin-top: 1vh; */
   margin-left: 15px;
+  margin-top: 5px;
 }
 
 calcite-action-bar {
@@ -60,21 +61,7 @@ calcite-panel {
 
 calcite-list {
   overflow-y: auto;
-  --calcite-ui-border-3: #555555;
-}
-
-#result-list {
-  overflow-y: auto;
-  --calcite-ui-text-1: #ff0000;
-  --calcite-ui-text-3: #eaeaea;
-  --calcite-ui-foreground-2: #202020;
-}
-
-#exproListChip {
-  --calcite-ui-text-1: #ffffff;
-  /*--calcite-ui-foreground-2: #555555;*/
-  --calcite-ui-foreground-2: rgb(0, 0, 0, 0);
-  margin-inline-end: 0.75rem;
+  /* --calcite-ui-border-3: #555555; */
 }
 
 calcite-avatar {
@@ -89,6 +76,21 @@ calcite-tabs {
   border-style: solid;
   border-width: 0.7;
   border-top: rgb(0, 0, 0, 0);
+  width: 50vh;
+}
+
+#result-list {
+  overflow-y: auto;
+  --calcite-ui-text-1: #ff0000;
+  --calcite-ui-text-3: #eaeaea;
+  --calcite-ui-foreground-2: #202020;
+}
+
+#exproListChip {
+  --calcite-ui-text-1: #ffffff;
+  /*--calcite-ui-foreground-2: #555555;*/
+  --calcite-ui-foreground-2: rgb(0, 0, 0, 0);
+  margin-inline-end: 0.75rem;
 }
 
 .esri-view .esri-view-surface--touch-none:focus::after {
@@ -176,9 +178,10 @@ calcite-tabs {
 
 .DemolishedNumber {
   color: #6ede00;
-  font-size: 2.5vw;
+  font-size: 2rem;
   font-weight: bold;
   font-family: 'calibri';
+  margin-left: 4%;
 }
 
 .moaStructureTitle {
@@ -204,16 +207,17 @@ calcite-tabs {
 
 .isfTotalNumber {
   color: #6ede00;
-  font-size: 2.5vw;
+  font-size: 2rem;
   font-weight: bold;
   font-family: 'calibri';
+  margin-left: 4%;
 }
 
 /* Header */
 .headerTitle {
   color: white;
   margin-left: 1rem;
-  font-size: 2.6vh;
+  font-size: 1.4rem;
   margin-top: auto;
   margin-bottom: auto;
 }

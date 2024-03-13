@@ -8,13 +8,7 @@ import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5themes_Responsive from '@amcharts/amcharts5/themes/Responsive';
 import { generateIsfData, generateIsfNumber, thousands_separators } from '../Query';
-
-//https://codesandbox.io/s/amcharts5-react-demo-forked-gid7b0?from-embed=&file=/src/App.js:271-276
-// https://github.com/reactchartjs/react-chartjs-2/blob/master/src/chart.tsx
-//https://www.reddit.com/r/reactjs/comments/gr5vhh/react_hooks_and_amcharts4/?rdt=56344
-//https://medium.com/swlh/how-to-use-amcharts-4-with-react-hooks-999a62c185a5
-//https://codesandbox.io/s/amcharts5-react-demo-forked-hrth2d
-// Zoom
+import { CalciteLabel } from '@esri/calcite-components-react';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
@@ -248,8 +242,8 @@ const IsfChart = memo(({ contractp, landtype, landsection }: any) => {
 
     legend.itemContainers.template.setAll({
       // set space between legend items
-      paddingTop: 1.1,
-      paddingBottom: 2,
+      paddingTop: 10.1,
+      paddingBottom: 1,
     });
 
     pieSeries.appear(1000, 100);
@@ -266,21 +260,21 @@ const IsfChart = memo(({ contractp, landtype, landsection }: any) => {
 
   return (
     <>
-      <div className="isfNumberImage">
-        <div>
-          <div className="totalIsfLabel">TOTAL ISF </div>
-          <br />
-          <br />
-          <b className="isfTotalNumber">{thousands_separators(isfNumber)} </b>
-        </div>
-        <img
-          src="https://EijiGorilla.github.io/Symbols/NLO_Logo.svg"
-          alt="NLO Logo"
-          height={'19%'}
-          width={'19%'}
-          style={{ padding: '10px', margin: 'auto' }}
-        />
-      </div>
+      <CalciteLabel>TOTAL ISF</CalciteLabel>
+      <CalciteLabel layout="inline">
+        <b className="isfTotalNumber">
+          {thousands_separators(isfNumber)}
+
+          <img
+            src="https://EijiGorilla.github.io/Symbols/NLO_Logo.svg"
+            alt="NLO Logo"
+            height={'60%'}
+            width={'60%'}
+            style={{ marginLeft: '250%', display: 'flex', marginTop: '-35%' }}
+          />
+        </b>
+      </CalciteLabel>
+
       <div
         id={chartID}
         style={{
