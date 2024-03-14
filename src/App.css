@@ -146,24 +146,17 @@ calcite-tabs {
 
 .totalLotsNumber2 {
   color: white;
-  font-size: 1vw;
+  font-size: 1rem;
   font-weight: normal;
 }
 
 .handedOverLabel {
   color: white;
-  font-size: 1.1vw;
+  font-size: 1rem;
   padding-bottom: 0.6vh;
 }
 
 /* Structure Tab */
-.totalStructuresLabel {
-  color: white;
-  font-size: 1vw;
-  padding-bottom: 0.5vh;
-  padding-top: 0.6vh;
-}
-
 .structureNumberImage {
   display: flex;
   padding-left: 20px;
