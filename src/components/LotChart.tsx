@@ -139,9 +139,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
     // https://www.amcharts.com/docs/v5/charts/percent-charts/pie-chart/
     var chart = root.container.children.push(
       am5percent.PieChart.new(root, {
-        //centerY: am5.percent(-2), //-10
-        y: am5.percent(-25), // space between pie chart and total lots
-        layout: root.horizontalLayout,
+        layout: root.verticalLayout,
       }),
     );
     chartRef.current = chart;
@@ -157,7 +155,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
         legendValueText: "{valuePercentTotal.formatNumber('#.')}% ({value})",
         radius: am5.percent(45), // outer radius
         innerRadius: am5.percent(20),
-        marginBottom: -10,
+        scale: 2,
       }),
     );
     pieSeriesRef.current = pieSeries;
@@ -167,7 +165,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
     pieSeries.slices.template.setAll({
       fillOpacity: 0.9,
       stroke: am5.color('#ffffff'),
-      strokeWidth: 1,
+      strokeWidth: 0.5,
       strokeOpacity: 1,
       templateField: 'sliceSettings',
     });
@@ -244,12 +242,10 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
     // Legend
     // https://www.amcharts.com/docs/v5/charts/percent-charts/legend-percent-series/
-    var legend = root.container.children.push(
+    var legend = chart.children.push(
       am5.Legend.new(root, {
         centerX: am5.percent(50),
         x: am5.percent(50),
-        y: am5.percent(48),
-        layout: root.verticalLayout,
       }),
     );
     legendRef.current = legend;
@@ -305,8 +301,8 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
     legend.itemContainers.template.setAll({
       // set space between legend items
-      paddingTop: 1.1,
-      paddingBottom: 2,
+      paddingTop: 3,
+      paddingBottom: 1,
     });
 
     pieSeries.appear(1000, 100);
@@ -343,8 +339,6 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
         panY: false,
         wheelX: 'none',
         wheelY: 'none',
-        paddingLeft: 0,
-        marginTop: 20,
         //height: am5.percent(81),
       }),
     );
@@ -554,10 +548,10 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
       <div
         id={chartID}
         style={{
-          height: '45vh',
+          height: '40vh',
           backgroundColor: 'rgb(0,0,0,0)',
           color: 'white',
-          marginBottom: '-1.5vh',
+          marginBottom: '5%',
         }}
       ></div>
 
