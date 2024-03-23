@@ -48,54 +48,32 @@ const statusLot: string[] = [
   'ROWUA/TUA',
 ];
 
-export const statusLotChartQuery = [
-  {
-    category: statusLot[0],
-    value: 1,
-  },
-  {
-    category: statusLot[1],
-    value: 2,
-  },
-  {
-    category: statusLot[2],
-    value: 3,
-  },
-  {
-    category: statusLot[3],
-    value: 4,
-  },
-  {
-    category: statusLot[4],
-    value: 5,
-  },
-  {
-    category: statusLot[5],
-    value: 6,
-  },
-  {
-    category: statusLot[6],
-    value: 7,
-  },
+const statusLotColor: string[] = [
+  '#70ad47', // Paid
+  '#0070ff', // For Payment Processing
+  '#ffff00', // For Legal Pass
+  '#ffaa00', // For Appraisal/Offer to Buy
+  '#ff0000', // For Expro
+  '#00734c', // With WOP...
+  '#55ff00', // ROWUA/TUA
 ];
+
+export const statusLotChartQuery = statusLot.map((status: any, index: any) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+  });
+});
 
 // For Lot MoA Chart
 const statusMOA: String[] = ['1-NVS', '2-Expropriation', '3-ROWUA'];
 
-export const statusMoaLotChartQuery = [
-  {
-    category: statusMOA[0],
-    value: 1,
-  },
-  {
-    category: statusMOA[1],
-    value: 2,
-  },
-  {
-    category: statusMOA[2],
-    value: 3,
-  },
-];
+export const statusMoaLotChartQuery = statusMOA.map((status: any, index: any) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+  });
+});
 
 // For Structure Pie Chart
 const statusStructure = [
@@ -107,63 +85,31 @@ const statusStructure = [
   'Quit Claim',
 ];
 
-export const statusStructureChartQuery = [
-  {
-    category: statusStructure[0],
-    value: 1,
-  },
-  {
-    category: statusStructure[1],
-    value: 2,
-  },
-  {
-    category: statusStructure[2],
-    value: 3,
-  },
-  {
-    category: statusStructure[3],
-    value: 4,
-  },
-  {
-    category: statusStructure[4],
-    value: 5,
-  },
-  {
-    category: statusStructure[5],
-    value: 6,
-  },
-];
+export const statusStructureChartQuery = statusStructure.map((status: any, index: any) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+  });
+});
 
 const statusMoaStructure = ['1-NVS', '2-Expropriation', '3-ROWUA'];
 
-export const statusMoaStructureChartQuery = [
-  {
-    category: statusMoaStructure[0],
-    value: 1,
-  },
-  {
-    category: statusMoaStructure[1],
-    value: 2,
-  },
-  {
-    category: statusMoaStructure[2],
-    value: 3,
-  },
-];
+export const statusMoaStructureChartQuery = statusMoaStructure.map((status: any, index: any) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+  });
+});
 
 // Non-Land Owner
 const statusNlo = ['UNRELOCATED', 'RELOCATED'];
 
-export const statusIsfChartQuery = [
-  {
-    category: statusNlo[0],
-    value: 1,
-  },
-  {
-    category: statusNlo[1],
-    value: 2,
-  },
-];
+export const statusIsfChartQuery = statusNlo.map((status: any, index: any) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+  });
+});
 
 export async function generateLotData() {
   var total_paid_lot = new StatisticDefinition({
