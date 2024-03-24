@@ -40,8 +40,15 @@ export const colorStructure = [
   [0, 115, 76], //Quit Claim #00734C
 ];
 
+// Structure demolished
+export const statusStructureDemolish = ['Demolished', 'Not Yet'];
+export const statusStructureDemolishLabel = ['Demolished', 'Occupied'];
+export const statusStructureDemolishColor = ['#FFAA00', '#99A5A2'];
+
+// Structure MOA
 export const statusMoaStructure = ['1-NVS', '2-Expropriation', '3-ROWUA'];
 
-// NLO
-export const statusNlo = ['UNRELOCATED', 'RELOCATED'];
-export const colorIsf = ['#267300', '#FF0000'];
+// ISF
+export const statusIsf = ['UNRELOCATED', 'RELOCATED'];
+export const statusIsfLabel = ['Unrelocated', 'Relocated'];
+export const colorIsf = ['#FF0000', '#267300'];

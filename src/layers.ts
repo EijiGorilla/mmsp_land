@@ -9,8 +9,12 @@ import {
   colorStructure,
   statusLot,
   statusLotColor,
-  statusNlo,
+  statusIsf,
   statusStructure,
+  statusIsfLabel,
+  statusStructureDemolish,
+  statusStructureDemolishLabel,
+  statusStructureDemolishColor,
 } from './StatusUniqueValues';
 
 /* Standalone table for Dates */
@@ -370,37 +374,24 @@ export const structureLayer = new FeatureLayer({
 });
 
 /* Structure Demolished Layer */
+const structureDemolishUniqueValueInfos = statusStructureDemolish.map((status: any, index: any) => {
+  return Object.assign({
+    value: status,
+    label: statusStructureDemolishLabel[index],
+    symbol: new SimpleFillSymbol({
+      color: statusStructureDemolishColor[index],
+      style: 'solid',
+      outline: {
+        color: '#6E6E6E',
+        width: 0.7,
+      },
+    }),
+  });
+});
 const structureDemolishedRenderer = new UniqueValueRenderer({
   field: 'REMARKS',
   defaultSymbol: defaultLotSymbolBoundary, // autocasts as new SimpleFillSymbol()
-  uniqueValueInfos: [
-    {
-      // All features with value of "North" will be blue
-      value: 'Demolished',
-      label: 'Demolished',
-      symbol: new SimpleFillSymbol({
-        color: '#FFAA00',
-        style: 'solid', // "backward-diagonal"
-        outline: {
-          color: '#6E6E6E',
-          width: 0.7,
-        },
-      }),
-    },
-    {
-      // All features with value of "North" will be blue
-      value: 'Not Yet',
-      label: 'Occupied',
-      symbol: new SimpleFillSymbol({
-        color: '#99A5A2',
-        style: 'solid',
-        outline: {
-          color: '#6E6E6E',
-          width: 0.7,
-        },
-      }),
-    },
-  ],
+  uniqueValueInfos: structureDemolishUniqueValueInfos,
 });
 
 export const structureDemolishedLayer = new FeatureLayer({
@@ -441,35 +432,23 @@ export const structureDemolishedLayer = new FeatureLayer({
 });
 
 /* ISF Layer */
-
+const isfRendererUniqueValueInfos = statusIsf.map((status: any, index: any) => {
+  return Object.assign({
+    value: status,
+    label: statusIsfLabel[index],
+    symbol: new SimpleMarkerSymbol({
+      size: 9,
+      color: colorIsf[index],
+      outline: {
+        width: 1.5,
+        color: 'white',
+      },
+    }),
+  });
+});
 let isfRenderer = new UniqueValueRenderer({
   field: 'RELOCATION',
-  uniqueValueInfos: [
-    {
-      value: statusNlo[1],
-      label: 'Relocated',
-      symbol: new SimpleMarkerSymbol({
-        size: 9,
-        color: colorIsf[0], // the first two letters dictate transparency.
-        outline: {
-          width: 1.5,
-          color: 'white',
-        },
-      }),
-    },
-    {
-      value: statusNlo[0],
-      label: 'Unrelocated',
-      symbol: new SimpleMarkerSymbol({
-        size: 9,
-        color: colorIsf[1], // the first two letters dictate transparency.
-        outline: {
-          width: 1.5,
-          color: 'white',
-        },
-      }),
-    },
-  ],
+  uniqueValueInfos: isfRendererUniqueValueInfos,
 });
 
 export const isfLayer = new FeatureLayer({

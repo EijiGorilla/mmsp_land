@@ -7,7 +7,7 @@ import {
   statusLotColor,
   statusMOA,
   statusMoaStructure,
-  statusNlo,
+  statusIsf,
   statusStructure,
 } from './StatusUniqueValues';
 
@@ -75,8 +75,8 @@ export const statusMoaStructureChartQuery = statusMoaStructure.map((status: any,
   });
 });
 
-// Non-Land Owner
-export const statusIsfChartQuery = statusNlo.map((status: any, index: any) => {
+// ISF Owner
+export const statusIsfChartQuery = statusIsf.map((status: any, index: any) => {
   return Object.assign({
     category: status,
     value: index + 1,
@@ -615,14 +615,14 @@ export async function generateIsfData() {
 
     const compile = [
       {
-        category: statusNlo[0],
+        category: statusIsf[0],
         value: unrelocate,
         sliceSettings: {
           fill: am5.color('#ff0000'),
         },
       },
       {
-        category: statusNlo[1],
+        category: statusIsf[1],
         value: relocate,
         sliceSettings: {
           fill: am5.color('#70AD47'),
