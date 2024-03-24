@@ -4,6 +4,14 @@ import SimpleFillSymbol from '@arcgis/core/symbols/SimpleFillSymbol';
 import UniqueValueRenderer from '@arcgis/core/renderers/UniqueValueRenderer';
 import SimpleRenderer from '@arcgis/core/renderers/SimpleRenderer';
 import { SimpleMarkerSymbol, TextSymbol, SimpleLineSymbol } from '@arcgis/core/symbols';
+import {
+  colorIsf,
+  colorStructure,
+  statusLot,
+  statusLotColor,
+  statusNlo,
+  statusStructure,
+} from './StatusUniqueValues';
 
 /* Standalone table for Dates */
 export const dateTable = new FeatureLayer({
@@ -118,17 +126,6 @@ export const stationBoxLayer = new FeatureLayer({
 });
 
 /* Land */
-
-const lotColor = [
-  [112, 173, 71],
-  [0, 112, 255],
-  [255, 255, 0],
-  [255, 170, 0],
-  [255, 0, 0],
-  [0, 115, 76],
-  '#55FF00',
-];
-
 const defaultSymbolLot = new SimpleFillSymbol({
   color: [0, 0, 0, 0],
   style: 'solid',
@@ -138,60 +135,20 @@ const defaultSymbolLot = new SimpleFillSymbol({
   }),
 });
 
+const lotLayerUniquValueInfos: any = statusLot.map((status: any, index: any) => {
+  return Object.assign({
+    value: index + 1,
+    label: status,
+    symbol: new SimpleFillSymbol({
+      color: statusLotColor[index],
+    }),
+  });
+});
+
 const lotLayerStatusRenderer = new UniqueValueRenderer({
   field: 'StatusNVS3',
   defaultSymbol: defaultSymbolLot,
-  uniqueValueInfos: [
-    {
-      value: 1,
-      label: 'Paid',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[0],
-      }),
-    },
-    {
-      value: 2,
-      label: 'For Payment Processing',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[1],
-      }),
-    },
-    {
-      value: 3,
-      label: 'For Legal Pass',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[2],
-      }),
-    },
-    {
-      value: 4,
-      label: 'For Appraisal/Offer to Buy',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[3],
-      }),
-    },
-    {
-      value: 5,
-      label: 'For Expro',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[4],
-      }),
-    },
-    {
-      value: 6,
-      label: 'with WOP Fully Turned-over',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[5],
-      }),
-    },
-    {
-      value: 7,
-      label: 'ROWUA/TUA',
-      symbol: new SimpleFillSymbol({
-        color: lotColor[6],
-      }),
-    },
-  ],
+  uniqueValueInfos: lotLayerUniquValueInfos,
 });
 
 const lotLabel = new LabelClass({
@@ -344,15 +301,6 @@ export const pteLotSubteLayer1 = new FeatureLayer({
 });
 
 /* Structure Layer */
-const colorStructure = [
-  [112, 173, 71], // Paid #70AD47
-  [0, 112, 255], // For Payment Processing #0070FF
-  [255, 255, 0], // For Legal Pass #FFFF00
-  [255, 170, 0], // For Appraisal/Offer to Compensate #FFAA00
-  [255, 0, 0], // For Expro #FF0000
-  [0, 115, 76], //Quit Claim #00734C
-];
-
 const defaultLotSymbolBoundary = new SimpleFillSymbol({
   color: [0, 0, 0, 0],
   style: 'solid',
@@ -363,83 +311,25 @@ const defaultLotSymbolBoundary = new SimpleFillSymbol({
   },
 });
 
+const structureLayerUniquValueInfos: any = statusStructure.map((status: any, index: any) => {
+  return Object.assign({
+    value: index + 1,
+    label: status,
+    symbol: new SimpleFillSymbol({
+      color: colorStructure[index],
+      style: 'backward-diagonal',
+      outline: {
+        color: '#6e6e6e',
+        width: 0.7,
+      },
+    }),
+  });
+});
+
 export const structureLayerRenderer = new UniqueValueRenderer({
   field: 'Status',
   defaultSymbol: defaultLotSymbolBoundary,
-  uniqueValueInfos: [
-    {
-      value: 1,
-      label: 'Paid',
-      symbol: new SimpleFillSymbol({
-        color: colorStructure[0],
-        style: 'backward-diagonal',
-        outline: {
-          color: '#6e6e6e',
-          width: 0.7,
-        },
-      }),
-    },
-    {
-      value: 2,
-      label: 'For Payment Processing',
-      symbol: new SimpleFillSymbol({
-        color: colorStructure[1],
-        style: 'backward-diagonal',
-        outline: {
-          color: '#6e6e6e',
-          width: 0.7,
-        },
-      }),
-    },
-    {
-      value: 3,
-      label: 'For Legal Pass',
-      symbol: new SimpleFillSymbol({
-        color: colorStructure[2],
-        style: 'backward-diagonal',
-        outline: {
-          color: '#6e6e6e',
-          width: 0.7,
-        },
-      }),
-    },
-    {
-      value: 4,
-      label: 'For Appraisal/Offer to Buy',
-      symbol: new SimpleFillSymbol({
-        color: colorStructure[3],
-        style: 'backward-diagonal',
-        outline: {
-          color: '#6e6e6e',
-          width: 0.7,
-        },
-      }),
-    },
-    {
-      value: 5,
-      label: 'For Expro',
-      symbol: new SimpleFillSymbol({
-        color: colorStructure[4],
-        style: 'backward-diagonal',
-        outline: {
-          color: '#6e6e6e',
-          width: 0.7,
-        },
-      }),
-    },
-    {
-      value: 6,
-      label: 'Quit Claim',
-      symbol: new SimpleFillSymbol({
-        color: colorStructure[5],
-        style: 'backward-diagonal',
-        outline: {
-          color: '#6e6e6e',
-          width: 0.7,
-        },
-      }),
-    },
-  ],
+  uniqueValueInfos: structureLayerUniquValueInfos,
 });
 
 export const structureLayer = new FeatureLayer({
@@ -551,13 +441,12 @@ export const structureDemolishedLayer = new FeatureLayer({
 });
 
 /* ISF Layer */
-const colorIsf = ['#267300', '#FF0000'];
 
 let isfRenderer = new UniqueValueRenderer({
   field: 'RELOCATION',
   uniqueValueInfos: [
     {
-      value: 'RELOCATED',
+      value: statusNlo[1],
       label: 'Relocated',
       symbol: new SimpleMarkerSymbol({
         size: 9,
@@ -569,7 +458,7 @@ let isfRenderer = new UniqueValueRenderer({
       }),
     },
     {
-      value: 'UNRELOCATED',
+      value: statusNlo[0],
       label: 'Unrelocated',
       symbol: new SimpleMarkerSymbol({
         size: 9,

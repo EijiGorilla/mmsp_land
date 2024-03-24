@@ -2,6 +2,14 @@ import { dateTable, isfLayer, lotLayer, pteLotSubteLayer1, structureLayer } from
 import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import * as am5 from '@amcharts/amcharts5';
 import { view } from './Scene';
+import {
+  statusLot,
+  statusLotColor,
+  statusMOA,
+  statusMoaStructure,
+  statusNlo,
+  statusStructure,
+} from './StatusUniqueValues';
 
 // Updat date
 export async function dateUpdate() {
@@ -37,27 +45,6 @@ export async function dateUpdate() {
   });
 }
 
-// For Lot Pie Chart
-const statusLot: string[] = [
-  'Paid',
-  'For Payment Processing',
-  'For Legal Pass',
-  'For Appraisal/Offer to Buy',
-  'For Expro',
-  'with WOP Fully Turned-over',
-  'ROWUA/TUA',
-];
-
-const statusLotColor: string[] = [
-  '#70ad47', // Paid
-  '#0070ff', // For Payment Processing
-  '#ffff00', // For Legal Pass
-  '#ffaa00', // For Appraisal/Offer to Buy
-  '#ff0000', // For Expro
-  '#00734c', // With WOP...
-  '#55ff00', // ROWUA/TUA
-];
-
 export const statusLotChartQuery = statusLot.map((status: any, index: any) => {
   return Object.assign({
     category: status,
@@ -66,8 +53,6 @@ export const statusLotChartQuery = statusLot.map((status: any, index: any) => {
 });
 
 // For Lot MoA Chart
-const statusMOA: String[] = ['1-NVS', '2-Expropriation', '3-ROWUA'];
-
 export const statusMoaLotChartQuery = statusMOA.map((status: any, index: any) => {
   return Object.assign({
     category: status,
@@ -76,23 +61,12 @@ export const statusMoaLotChartQuery = statusMOA.map((status: any, index: any) =>
 });
 
 // For Structure Pie Chart
-const statusStructure = [
-  'Paid',
-  'For Payment Processing',
-  'For Legal Pass',
-  'For Appraisal/Offer to Buy',
-  'For Expro',
-  'Quit Claim',
-];
-
 export const statusStructureChartQuery = statusStructure.map((status: any, index: any) => {
   return Object.assign({
     category: status,
     value: index + 1,
   });
 });
-
-const statusMoaStructure = ['1-NVS', '2-Expropriation', '3-ROWUA'];
 
 export const statusMoaStructureChartQuery = statusMoaStructure.map((status: any, index: any) => {
   return Object.assign({
@@ -102,8 +76,6 @@ export const statusMoaStructureChartQuery = statusMoaStructure.map((status: any,
 });
 
 // Non-Land Owner
-const statusNlo = ['UNRELOCATED', 'RELOCATED'];
-
 export const statusIsfChartQuery = statusNlo.map((status: any, index: any) => {
   return Object.assign({
     category: status,
