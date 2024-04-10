@@ -475,96 +475,61 @@ export async function generateStrucNumber() {
   });
 }
 
-export async function generateIsfData() {
-  // const qCP = "Package = '" + contractp + "'";
-  // const qLandType = "Type = '" + landtype + "'";
-  // const qCpLandType = qCP + ' AND ' + qLandType;
-  // const qLandSection = "Station1 ='" + landsection + "'";
-  // const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
+export async function generateIsfData(contractp: any, landtype: any, landsection: any) {
+  const qCP = "Package = '" + contractp + "'";
+  const qLandType = "Type = '" + landtype + "'";
+  const qCpLandType = qCP + ' AND ' + qLandType;
+  const qLandSection = "Station1 ='" + landsection + "'";
+  const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
 
-  // var total_count = new StatisticDefinition({
-  //   onStatisticField: statusIsfField,
-  //   outStatisticFieldName: 'total_count',
-  //   statisticType: 'count',
-  // });
-
-  // var query = isfLayer.createQuery();
-  // query.outFields = [statusIsfField];
-  // query.outStatistics = [total_count];
-  // query.orderByFields = [statusIsfField];
-  // query.groupByFieldsForStatistics = [statusIsfField];
-
-  // if (!contractp) {
-  //   query.where = '1=1';
-  // } else if (contractp && !landtype && !landsection) {
-  //   query.where = qCP;
-  // } else if (contractp && landtype && !landsection) {
-  //   query.where = qCpLandType;
-  // } else {
-  //   query.where = qCpLandTypeSection;
-  // }
-
-  // return isfLayer.queryFeatures(query).then((response: any) => {
-  //   var stats = response.features;
-  //   const data = stats.map((result: any, index: any) => {
-  //     const attributes = result.attributes;
-  //     const status_id = attributes.RELOCATION;
-  //     const count = attributes.total_count;
-  //     return Object.assign({
-  //       category: statusIsfLabel[status_id - 1],
-  //       value: count,
-  //     });
-  //   });
-
-  //   const data1: any = [];
-  //   statusIsfLabel.map((status: any, index: any) => {
-  //     const find = data.find((emp: any) => emp.category === status);
-  //     const value = find === undefined ? 0 : find?.value;
-  //     const object = {
-  //       category: status,
-  //       value: value,
-  //       sliceSettings: {
-  //         fill: am5.color(statusIsfQuery[index].color),
-  //       },
-  //     };
-  //     data1.push(object);
-  //   });
-  //   return data1;
-  // });
-  var total_unrelocated_lot = new StatisticDefinition({
-    onStatisticField: "CASE WHEN RELOCATION <> 'RELOCATED' THEN 1 ELSE 0 END",
-    outStatisticFieldName: 'total_unrelocated_lot',
-    statisticType: 'sum',
+  var total_count = new StatisticDefinition({
+    onStatisticField: statusIsfField,
+    outStatisticFieldName: 'total_count',
+    statisticType: 'count',
   });
-  var total_relocated_lot = new StatisticDefinition({
-    onStatisticField: "CASE WHEN RELOCATION = 'RELOCATED' THEN 1 ELSE 0 END",
-    outStatisticFieldName: 'total_relocated_lot',
-    statisticType: 'sum',
-  });
+
   var query = isfLayer.createQuery();
-  query.outStatistics = [total_unrelocated_lot, total_relocated_lot];
-  query.returnGeometry = true;
+  query.outFields = [statusIsfField];
+  query.outStatistics = [total_count];
+  query.orderByFields = [statusIsfField];
+  query.groupByFieldsForStatistics = [statusIsfField];
+
+  if (!contractp) {
+    query.where = '1=1';
+  } else if (contractp && !landtype && !landsection) {
+    query.where = qCP;
+  } else if (contractp && landtype && !landsection) {
+    query.where = qCpLandType;
+  } else {
+    query.where = qCpLandTypeSection;
+  }
+
   return isfLayer.queryFeatures(query).then((response: any) => {
-    var stats = response.features[0].attributes;
-    const unrelocate = stats.total_unrelocated_lot;
-    const relocate = stats.total_relocated_lot;
-    const compile = [
-      {
-        category: statusIsf[0],
-        value: unrelocate,
+    var stats = response.features;
+    const data = stats.map((result: any, index: any) => {
+      const attributes = result.attributes;
+      const status_id = attributes.RELOCATION;
+      const count = attributes.total_count;
+      return Object.assign({
+        category: status_id,
+        value: count,
+      });
+    });
+
+    const data1: any = [];
+    statusIsf.map((status: any, index: any) => {
+      const find = data.find((emp: any) => emp.category === status);
+      const value = find === undefined ? 0 : find?.value;
+      const object = {
+        category: status,
+        value: value,
         sliceSettings: {
-          fill: am5.color('#ff0000'),
+          fill: am5.color(statusIsfQuery[index].color),
         },
-      },
-      {
-        category: statusIsf[1],
-        value: relocate,
-        sliceSettings: {
-          fill: am5.color('#70AD47'),
-        },
-      },
-    ];
-    return compile;
+      };
+      data1.push(object);
+    });
+    return data1;
   });
 }
 

@@ -57,7 +57,7 @@ const IsfChart = memo(({ contractp, landtype, landsection }: any) => {
   }
 
   useEffect(() => {
-    generateIsfData().then((result: any) => {
+    generateIsfData(contractp, landtype, landsection).then((result: any) => {
       SetIsfData(result);
     });
 
