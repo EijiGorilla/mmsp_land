@@ -1,5 +1,6 @@
 // Lot
-export const statusLot = [
+export const lotStatusField = 'StatusNVS3';
+export const statusLotLabel = [
   'Paid',
   'For Payment Processing',
   'For Legal Pass',
@@ -19,9 +20,26 @@ export const statusLotColor = [
   '#55ff00', // ROWUA/TUA
 ];
 
+export const statusLotQuery = statusLotLabel.map((status, index) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+    color: statusLotColor[index],
+  });
+});
+
+// Lot MOA
+export const statusLotMoaField = 'S_MOA';
 export const statusMOA = ['1-NVS', '2-Expropriation', '3-ROWUA'];
+export const statusLotMoaQuery = statusMOA.map((status, index) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+  });
+});
 
 // Structure
+export const statusStructureField = 'Status';
 export const statusStructure = [
   'Paid',
   'For Payment Processing',
@@ -40,6 +58,16 @@ export const colorStructure = [
   [0, 115, 76], //Quit Claim #00734C
 ];
 
+export const colorStructureHex = ['#70AD47', '#0070FF', '#FFFF00', '#FFAA00', '#FF0000', '#00734C'];
+
+export const statusStructureQuery = statusStructure.map((status, index) => {
+  return Object.assign({
+    category: status,
+    value: index + 1,
+    color: colorStructureHex[index],
+  });
+});
+
 // Structure demolished
 export const statusStructureDemolish = ['Demolished', 'Not Yet'];
 export const statusStructureDemolishLabel = ['Demolished', 'Occupied'];
@@ -49,6 +77,14 @@ export const statusStructureDemolishColor = ['#FFAA00', '#99A5A2'];
 export const statusMoaStructure = ['1-NVS', '2-Expropriation', '3-ROWUA'];
 
 // ISF
+export const statusIsfField = 'RELOCATION';
 export const statusIsf = ['UNRELOCATED', 'RELOCATED'];
 export const statusIsfLabel = ['Unrelocated', 'Relocated'];
 export const colorIsf = ['#FF0000', '#267300'];
+export const statusIsfQuery = statusIsf.map((status, index) => {
+  return Object.assign({
+    category: status,
+    value: statusIsf[index],
+    color: colorIsf[index],
+  });
+});

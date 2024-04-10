@@ -17,12 +17,11 @@ import {
   generateLotMoaData,
   generateLotNumber,
   generatePTE,
-  statusLotChartQuery,
-  statusMoaLotChartQuery,
   thousands_separators,
 } from '../Query';
 
 import { CalciteLabel } from '@esri/calcite-components-react';
+import { statusLotMoaQuery, statusLotQuery } from '../StatusUniqueValues';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
@@ -84,7 +83,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
   }
 
   useEffect(() => {
-    generateLotData().then((result: any) => {
+    generateLotData(contractp, landtype, landsection).then((result: any) => {
       setLotData(result);
     });
 
@@ -93,7 +92,6 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
       setLotNumber(response);
     });
 
-    console.log(landtype);
     if (!landtype) {
       // Handed Over (Lot) + PTE (Subterranean)
       generateHandedOverPTE().then((response: any) => {
@@ -112,7 +110,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
     }
 
     // Mode of Acquisition
-    generateLotMoaData().then((response: any) => {
+    generateLotMoaData(contractp, landtype, landsection).then((response: any) => {
       setLotMoaData(response);
     });
   }, [contractp, landtype, landsection]);
@@ -179,7 +177,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
     pieSeries.slices.template.events.on('click', (ev) => {
       const selected: any = ev.target.dataItem?.dataContext;
       const categorySelected: string = selected.category;
-      const find = statusLotChartQuery.find((emp: any) => emp.category === categorySelected);
+      const find = statusLotQuery.find((emp: any) => emp.category === categorySelected);
       const statusSelect = find?.value;
 
       var highlightSelect: any;
@@ -452,7 +450,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
     series.columns.template.events.on('click', function (ev) {
       const selected: any = ev.target.dataItem?.dataContext;
       const categorySelect: string = selected.category;
-      const find = statusMoaLotChartQuery.find((emp: any) => emp.category === categorySelect);
+      const find = statusLotMoaQuery.find((emp: any) => emp.category === categorySelect);
       const statusSelect = find?.value;
 
       var highlightSelect: any;

@@ -7,7 +7,7 @@ import { SimpleMarkerSymbol, TextSymbol, SimpleLineSymbol } from '@arcgis/core/s
 import {
   colorIsf,
   colorStructure,
-  statusLot,
+  statusLotLabel,
   statusLotColor,
   statusIsf,
   statusStructure,
@@ -139,7 +139,7 @@ const defaultSymbolLot = new SimpleFillSymbol({
   }),
 });
 
-const lotLayerUniquValueInfos: any = statusLot.map((status: any, index: any) => {
+const lotLayerUniquValueInfos: any = statusLotLabel.map((status: any, index: any) => {
   return Object.assign({
     value: index + 1,
     label: status,

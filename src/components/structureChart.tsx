@@ -8,14 +8,10 @@ import * as am5xy from '@amcharts/amcharts5/xy';
 import * as am5percent from '@amcharts/amcharts5/percent';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import am5themes_Responsive from '@amcharts/amcharts5/themes/Responsive';
-import {
-  generateStrucNumber,
-  generateStructureData,
-  thousands_separators,
-  statusStructureChartQuery,
-} from '../Query';
+import { generateStrucNumber, generateStructureData, thousands_separators } from '../Query';
 
 import { CalciteLabel } from '@esri/calcite-components-react';
+import { colorStructureHex, statusStructureQuery } from '../StatusUniqueValues';
 
 // Dispose function
 function maybeDisposeRoot(divId: any) {
@@ -69,7 +65,7 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
   }
 
   useEffect(() => {
-    generateStructureData().then((result: any) => {
+    generateStructureData(contractp, landtype, landsection).then((result: any) => {
       setStructureData(result);
     });
 
@@ -93,66 +89,21 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
         const width = 10;
         const height = 10;
 
-        this.patterns = [
-          am5.LinePattern.new(this._root, {
-            color: am5.color('#70AD47'),
-            gap: gap,
-            rotation: rotation,
-            strokeWidth: strokeWidth,
-            fillOpacity: fillOpacity,
-            width: width,
-            height: height,
-          }),
+        const patterns = colorStructureHex.map((color: any, index: any) => {
+          return Object.assign(
+            am5.LinePattern.new(this._root, {
+              color: am5.color(color),
+              gap: gap,
+              rotation: rotation,
+              strokeWidth: strokeWidth,
+              fillOpacity: fillOpacity,
+              width: width,
+              height: height,
+            }),
+          );
+        });
 
-          am5.LinePattern.new(this._root, {
-            color: am5.color('#0070FF'),
-            gap: gap,
-            rotation: rotation,
-            strokeWidth: strokeWidth,
-            fillOpacity: fillOpacity,
-            width: width,
-            height: height,
-          }),
-
-          am5.LinePattern.new(this._root, {
-            color: am5.color('#FFFF00'),
-            gap: gap,
-            rotation: rotation,
-            strokeWidth: strokeWidth,
-            fillOpacity: fillOpacity,
-            width: width,
-            height: height,
-          }),
-
-          am5.LinePattern.new(this._root, {
-            color: am5.color('#FFAA00'),
-            gap: gap,
-            rotation: rotation,
-            strokeWidth: strokeWidth,
-            fillOpacity: fillOpacity,
-            width: width,
-            height: height,
-          }),
-          am5.LinePattern.new(this._root, {
-            color: am5.color('#FF0000'),
-            gap: gap,
-            rotation: rotation,
-            strokeWidth: strokeWidth,
-            fillOpacity: fillOpacity,
-            width: width,
-            height: height,
-          }),
-
-          am5.LinePattern.new(this._root, {
-            color: am5.color('#00734C'),
-            gap: gap,
-            rotation: rotation,
-            strokeWidth: strokeWidth,
-            fillOpacity: fillOpacity,
-            width: width,
-            height: height,
-          }),
-        ];
+        this.patterns = patterns;
 
         this.currentPattern = 0;
         this.rule('Slice').setAll({
@@ -227,7 +178,7 @@ const StructureChart = memo(({ contractp, landtype, landsection, typelist }: any
     pieSeries.slices.template.events.on('click', (ev) => {
       const selected: any = ev.target.dataItem?.dataContext;
       const categorySelect: string = selected.category;
-      const find = statusStructureChartQuery.find((emp: any) => emp.category === categorySelect);
+      const find = statusStructureQuery.find((emp: any) => emp.category === categorySelect);
       const statusSelect = find?.value;
 
       var highlightSelect: any;

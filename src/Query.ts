@@ -3,12 +3,20 @@ import StatisticDefinition from '@arcgis/core/rest/support/StatisticDefinition';
 import * as am5 from '@amcharts/amcharts5';
 import { view } from './Scene';
 import {
-  statusLot,
+  statusLotLabel,
   statusLotColor,
   statusMOA,
   statusMoaStructure,
   statusIsf,
   statusStructure,
+  lotStatusField,
+  statusLotQuery,
+  statusLotMoaField,
+  statusStructureField,
+  statusStructureQuery,
+  statusIsfQuery,
+  statusIsfField,
+  statusIsfLabel,
 } from './StatusUniqueValues';
 
 // Updat date
@@ -45,161 +53,61 @@ export async function dateUpdate() {
   });
 }
 
-export const statusLotChartQuery = statusLot.map((status: any, index: any) => {
-  return Object.assign({
-    category: status,
-    value: index + 1,
-  });
-});
+export async function generateLotData(contractp: any, landtype: any, landsection: any) {
+  const qCP = "Package = '" + contractp + "'";
+  const qLandType = "Type = '" + landtype + "'";
+  const qCpLandType = qCP + ' AND ' + qLandType;
+  const qLandSection = "Station1 ='" + landsection + "'";
+  const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
 
-// For Lot MoA Chart
-export const statusMoaLotChartQuery = statusMOA.map((status: any, index: any) => {
-  return Object.assign({
-    category: status,
-    value: index + 1,
-  });
-});
-
-// For Structure Pie Chart
-export const statusStructureChartQuery = statusStructure.map((status: any, index: any) => {
-  return Object.assign({
-    category: status,
-    value: index + 1,
-  });
-});
-
-export const statusMoaStructureChartQuery = statusMoaStructure.map((status: any, index: any) => {
-  return Object.assign({
-    category: status,
-    value: index + 1,
-  });
-});
-
-// ISF Owner
-export const statusIsfChartQuery = statusIsf.map((status: any, index: any) => {
-  return Object.assign({
-    category: status,
-    value: index + 1,
-  });
-});
-
-export async function generateLotData() {
-  var total_paid_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 1 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_paid_lot',
-    statisticType: 'sum',
-  });
-
-  var total_payp_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 2 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_payp_lot',
-    statisticType: 'sum',
-  });
-
-  var total_legalpass_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 3 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_legalpass_lot',
-    statisticType: 'sum',
-  });
-
-  var total_otb_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 4 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_otb_lot',
-    statisticType: 'sum',
-  });
-
-  var total_expro_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 5 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_expro_lot',
-    statisticType: 'sum',
-  });
-
-  var total_dismiss_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 6 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_dismiss_lot',
-    statisticType: 'sum',
-  });
-
-  var total_rowua_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 = 7 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_rowua_lot',
-    statisticType: 'sum',
+  var total_count = new StatisticDefinition({
+    onStatisticField: lotStatusField,
+    outStatisticFieldName: 'total_count',
+    statisticType: 'count',
   });
 
   var query = lotLayer.createQuery();
-  query.outStatistics = [
-    total_paid_lot,
-    total_payp_lot,
-    total_legalpass_lot,
-    total_otb_lot,
-    total_expro_lot,
-    total_dismiss_lot,
-    total_rowua_lot,
-  ];
-  query.returnGeometry = true;
+  query.outFields = [lotStatusField];
+  query.outStatistics = [total_count];
+  query.orderByFields = [lotStatusField];
+  query.groupByFieldsForStatistics = [lotStatusField];
+
+  if (!contractp) {
+    query.where = '1=1';
+  } else if (contractp && !landtype && !landsection) {
+    query.where = qCP;
+  } else if (contractp && landtype && !landsection) {
+    query.where = qCpLandType;
+  } else {
+    query.where = qCpLandTypeSection;
+  }
 
   return lotLayer.queryFeatures(query).then((response: any) => {
-    var stats = response.features[0].attributes;
-    const paid = stats.total_paid_lot;
-    const payp = stats.total_payp_lot;
-    const legalpass = stats.total_legalpass_lot;
-    const otb = stats.total_otb_lot;
-    const expro = stats.total_expro_lot;
-    const dismissal = stats.total_dismiss_lot;
-    const rowua = stats.total_rowua_lot;
+    var stats = response.features;
+    const data = stats.map((result: any, index: any) => {
+      const attributes = result.attributes;
+      const status_id = attributes.StatusNVS3;
+      const count = attributes.total_count;
+      return Object.assign({
+        category: statusLotLabel[status_id - 1],
+        value: count,
+      });
+    });
 
-    const compile = [
-      {
-        category: statusLot[0],
-        value: paid,
+    const data1: any = [];
+    statusLotLabel.map((status: any, index: any) => {
+      const find = data.find((emp: any) => emp.category === status);
+      const value = find === undefined ? 0 : find?.value;
+      const object = {
+        category: status,
+        value: value,
         sliceSettings: {
-          fill: am5.color('#70ad47'),
+          fill: am5.color(statusLotQuery[index].color),
         },
-      },
-      {
-        category: statusLot[1],
-        value: payp,
-        sliceSettings: {
-          fill: am5.color('#0070ff'),
-        },
-      },
-      {
-        category: statusLot[2],
-        value: legalpass,
-        sliceSettings: {
-          fill: am5.color('#ffff00'),
-        },
-      },
-      {
-        category: statusLot[3],
-        value: otb,
-        sliceSettings: {
-          fill: am5.color('#ffaa00'),
-        },
-      },
-      {
-        category: statusLot[4],
-        value: expro,
-        sliceSettings: {
-          fill: am5.color('#ff0000'),
-        },
-      },
-      {
-        category: statusLot[5],
-        value: dismissal,
-        sliceSettings: {
-          fill: am5.color('#00734c'),
-        },
-      },
-      {
-        category: statusLot[6],
-        value: rowua,
-        sliceSettings: {
-          fill: am5.color('#55ff00'),
-        },
-      },
-    ];
-    return compile;
+      };
+      data1.push(object);
+    });
+    return data1;
   });
 }
 
@@ -210,8 +118,9 @@ export async function generateLotNumber() {
     statisticType: 'count',
   });
 
+  const ononStatisticFieldValue = 'CASE WHEN ' + lotStatusField + ' >=1 THEN 1 ELSE 0 END';
   var total_lot_pie = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN StatusNVS3 >= 1 THEN 1 ELSE 0 END',
+    onStatisticField: ononStatisticFieldValue,
     outStatisticFieldName: 'total_lot_pie',
     statisticType: 'sum',
   });
@@ -338,49 +247,58 @@ export async function generateHandedOverPTE() {
   return [totalPercentHandedOverPte, totalHandedOverPte];
 }
 
-export async function generateLotMoaData() {
-  var total_nvs_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN S_MOA = 1 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_nvs_lot',
-    statisticType: 'sum',
-  });
+export async function generateLotMoaData(contractp: any, landtype: any, landsection: any) {
+  const qCP = "Package = '" + contractp + "'";
+  const qLandType = "Type = '" + landtype + "'";
+  const qCpLandType = qCP + ' AND ' + qLandType;
+  const qLandSection = "Station1 ='" + landsection + "'";
+  const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
 
-  var total_expro_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN S_MOA = 2 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_expro_lot',
-    statisticType: 'sum',
-  });
-
-  var total_rowua_lot = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN S_MOA = 3 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_rowua_lot',
-    statisticType: 'sum',
+  var total_count = new StatisticDefinition({
+    onStatisticField: statusLotMoaField,
+    outStatisticFieldName: 'total_count',
+    statisticType: 'count',
   });
 
   var query = lotLayer.createQuery();
-  query.outStatistics = [total_nvs_lot, total_expro_lot, total_rowua_lot];
-  query.returnGeometry = true;
-  return lotLayer.queryFeatures(query).then((response: any) => {
-    var stats = response.features[0].attributes;
-    const nvs = stats.total_nvs_lot;
-    const expro = stats.total_expro_lot;
-    const rowua = stats.total_rowua_lot;
+  query.outFields = [statusLotMoaField];
+  query.outStatistics = [total_count];
+  query.orderByFields = [statusLotMoaField];
+  query.groupByFieldsForStatistics = [statusLotMoaField];
 
-    const compile = [
-      {
-        category: statusMOA[0],
-        value: nvs,
-      },
-      {
-        category: statusMOA[1],
-        value: expro,
-      },
-      {
-        category: statusMOA[2],
-        value: rowua,
-      },
-    ];
-    return compile;
+  if (!contractp) {
+    query.where = '1=1';
+  } else if (contractp && !landtype && !landsection) {
+    query.where = qCP;
+  } else if (contractp && landtype && !landsection) {
+    query.where = qCpLandType;
+  } else {
+    query.where = qCpLandTypeSection;
+  }
+
+  return lotLayer.queryFeatures(query).then((response: any) => {
+    var stats = response.features;
+    const data = stats.map((result: any, index: any) => {
+      const attributes = result.attributes;
+      const status_id = attributes.S_MOA;
+      const count = attributes.total_count;
+      return Object.assign({
+        category: statusMOA[status_id - 1],
+        value: count,
+      });
+    });
+
+    const data1: any = [];
+    statusMOA.map((status: any, index: any) => {
+      const find = data.find((emp: any) => emp.category === status);
+      const value = find === undefined ? 0 : find?.value;
+      const object = {
+        category: status,
+        value: value,
+      };
+      data1.push(object);
+    });
+    return data1;
   });
 }
 
@@ -457,91 +375,58 @@ export async function generateLotProgress(
   });
 }
 
-export async function generateStructureData() {
-  var total_paid_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN Status = 1 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_paid_struc',
-    statisticType: 'sum',
-  });
+export async function generateStructureData(contractp: any, landtype: any, landsection: any) {
+  const qCP = "Package = '" + contractp + "'";
+  const qLandType = "Type = '" + landtype + "'";
+  const qCpLandType = qCP + ' AND ' + qLandType;
+  const qLandSection = "Station1 ='" + landsection + "'";
+  const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
 
-  var total_payp_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN Status = 2 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_payp_struc',
-    statisticType: 'sum',
-  });
-
-  var total_legalpass_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN Status = 3 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_legalpass_struc',
-    statisticType: 'sum',
-  });
-
-  var total_otc_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN Status = 4 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_otc_struc',
-    statisticType: 'sum',
-  });
-
-  var total_expro_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN Status = 5 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_expro_struc',
-    statisticType: 'sum',
-  });
-
-  var total_quit_struc = new StatisticDefinition({
-    onStatisticField: 'CASE WHEN Status = 6 THEN 1 ELSE 0 END',
-    outStatisticFieldName: 'total_quit_struc',
-    statisticType: 'sum',
+  var total_count = new StatisticDefinition({
+    onStatisticField: statusStructureField,
+    outStatisticFieldName: 'total_count',
+    statisticType: 'count',
   });
 
   var query = structureLayer.createQuery();
-  query.outStatistics = [
-    total_paid_struc,
-    total_payp_struc,
-    total_legalpass_struc,
-    total_otc_struc,
-    total_expro_struc,
-    total_quit_struc,
-  ];
-  query.returnGeometry = true;
-  query.outFields = ['*'];
+  query.outFields = [statusStructureField];
+  query.outStatistics = [total_count];
+  query.orderByFields = [statusStructureField];
+  query.groupByFieldsForStatistics = [statusStructureField];
+
+  if (!contractp) {
+    query.where = '1=1';
+  } else if (contractp && !landtype && !landsection) {
+    query.where = qCP;
+  } else if (contractp && landtype && !landsection) {
+    query.where = qCpLandType;
+  } else {
+    query.where = qCpLandTypeSection;
+  }
+
   return structureLayer.queryFeatures(query).then((response: any) => {
-    var stats = response.features[0].attributes;
+    var stats = response.features;
+    const data = stats.map((result: any, index: any) => {
+      const attributes = result.attributes;
+      const status_id = attributes.Status;
+      const count = attributes.total_count;
+      return Object.assign({
+        category: statusStructure[status_id - 1],
+        value: count,
+      });
+    });
 
-    const paid = stats.total_paid_struc;
-    const payp = stats.total_payp_struc;
-    const legalpass = stats.total_legalpass_struc;
-    const otc = stats.total_otc_struc;
-    const expro = stats.total_expro_struc;
-    const quit = stats.total_quit_struc;
-
-    const compile = [
-      {
-        category: statusStructure[0],
-        value: paid,
-      },
-      {
-        category: statusStructure[1],
-        value: payp,
-      },
-      {
-        category: statusStructure[2],
-        value: legalpass,
-      },
-      {
-        category: statusStructure[3],
-        value: otc,
-      },
-      {
-        category: statusStructure[4],
-        value: expro,
-      },
-      {
-        category: statusStructure[5],
-        value: quit,
-      },
-    ];
-    return compile;
+    const data1: any = [];
+    statusStructure.map((status: any, index: any) => {
+      const find = data.find((emp: any) => emp.category === status);
+      const value = find === undefined ? 0 : find?.value;
+      const object = {
+        category: status,
+        value: value,
+      };
+      data1.push(object);
+    });
+    return data1;
   });
 }
 
@@ -591,28 +476,78 @@ export async function generateStrucNumber() {
 }
 
 export async function generateIsfData() {
+  // const qCP = "Package = '" + contractp + "'";
+  // const qLandType = "Type = '" + landtype + "'";
+  // const qCpLandType = qCP + ' AND ' + qLandType;
+  // const qLandSection = "Station1 ='" + landsection + "'";
+  // const qCpLandTypeSection = qCpLandType + ' AND ' + qLandSection;
+
+  // var total_count = new StatisticDefinition({
+  //   onStatisticField: statusIsfField,
+  //   outStatisticFieldName: 'total_count',
+  //   statisticType: 'count',
+  // });
+
+  // var query = isfLayer.createQuery();
+  // query.outFields = [statusIsfField];
+  // query.outStatistics = [total_count];
+  // query.orderByFields = [statusIsfField];
+  // query.groupByFieldsForStatistics = [statusIsfField];
+
+  // if (!contractp) {
+  //   query.where = '1=1';
+  // } else if (contractp && !landtype && !landsection) {
+  //   query.where = qCP;
+  // } else if (contractp && landtype && !landsection) {
+  //   query.where = qCpLandType;
+  // } else {
+  //   query.where = qCpLandTypeSection;
+  // }
+
+  // return isfLayer.queryFeatures(query).then((response: any) => {
+  //   var stats = response.features;
+  //   const data = stats.map((result: any, index: any) => {
+  //     const attributes = result.attributes;
+  //     const status_id = attributes.RELOCATION;
+  //     const count = attributes.total_count;
+  //     return Object.assign({
+  //       category: statusIsfLabel[status_id - 1],
+  //       value: count,
+  //     });
+  //   });
+
+  //   const data1: any = [];
+  //   statusIsfLabel.map((status: any, index: any) => {
+  //     const find = data.find((emp: any) => emp.category === status);
+  //     const value = find === undefined ? 0 : find?.value;
+  //     const object = {
+  //       category: status,
+  //       value: value,
+  //       sliceSettings: {
+  //         fill: am5.color(statusIsfQuery[index].color),
+  //       },
+  //     };
+  //     data1.push(object);
+  //   });
+  //   return data1;
+  // });
   var total_unrelocated_lot = new StatisticDefinition({
     onStatisticField: "CASE WHEN RELOCATION <> 'RELOCATED' THEN 1 ELSE 0 END",
     outStatisticFieldName: 'total_unrelocated_lot',
     statisticType: 'sum',
   });
-
   var total_relocated_lot = new StatisticDefinition({
     onStatisticField: "CASE WHEN RELOCATION = 'RELOCATED' THEN 1 ELSE 0 END",
     outStatisticFieldName: 'total_relocated_lot',
     statisticType: 'sum',
   });
-
   var query = isfLayer.createQuery();
   query.outStatistics = [total_unrelocated_lot, total_relocated_lot];
   query.returnGeometry = true;
-
   return isfLayer.queryFeatures(query).then((response: any) => {
     var stats = response.features[0].attributes;
-
     const unrelocate = stats.total_unrelocated_lot;
     const relocate = stats.total_relocated_lot;
-
     const compile = [
       {
         category: statusIsf[0],
