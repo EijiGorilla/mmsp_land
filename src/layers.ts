@@ -135,7 +135,7 @@ const defaultSymbolLot = new SimpleFillSymbol({
   style: 'solid',
   outline: new SimpleLineSymbol({
     color: [110, 110, 110],
-    width: 0.7,
+    width: 1,
   }),
 });
 
@@ -247,15 +247,23 @@ export const lotLayerBoundary = new FeatureLayer({
 });
 
 /* Handed-Over Lot */
-const handedOverRenderer = new SimpleRenderer({
-  symbol: new SimpleFillSymbol({
-    color: '#FF00C5',
-    style: 'solid',
-    outline: new SimpleLineSymbol({
-      color: [110, 110, 110],
-      width: 0.5,
-    }),
-  }),
+const handedOverRenderer = new UniqueValueRenderer({
+  field: 'HandedOver',
+  defaultSymbol: defaultSymbolLot,
+  uniqueValueInfos: [
+    {
+      value: 1,
+      label: 'Handed-Over',
+      symbol: new SimpleFillSymbol({
+        color: '#FF00C5',
+        style: 'solid',
+        outline: new SimpleLineSymbol({
+          color: [110, 110, 110],
+          width: 0.5,
+        }),
+      }),
+    },
+  ],
 });
 
 export const handedOverLotLayer = new FeatureLayer({
@@ -267,13 +275,32 @@ export const handedOverLotLayer = new FeatureLayer({
   },
   layerId: 8,
   // outFields: ['*'],
-  definitionExpression: 'HandedOver = 1',
+  // definitionExpression: 'HandedOver = 1',
   title: 'Handed-Over Lots',
   renderer: handedOverRenderer,
   popupEnabled: false,
 });
 
 /* Handed-Over Subterranean Lot */
+const pteSubterraneanRenderer = new UniqueValueRenderer({
+  field: 'PTE',
+  defaultSymbol: defaultSymbolLot,
+  uniqueValueInfos: [
+    {
+      value: 1,
+      label: 'PTE',
+      symbol: new SimpleFillSymbol({
+        color: '#FF00C5',
+        style: 'solid',
+        outline: new SimpleLineSymbol({
+          color: [110, 110, 110],
+          width: 0.5,
+        }),
+      }),
+    },
+  ],
+});
+
 export const pteLotSubteLayer = new FeatureLayer({
   portalItem: {
     id: '0c172b82ddab44f2bb439542dd75e8ae',
@@ -284,9 +311,10 @@ export const pteLotSubteLayer = new FeatureLayer({
   layerId: 8,
   // outFields: ['*'],
   // eslint-disable-next-line no-useless-concat
-  definitionExpression: "Type = 'Subterranean'" + ' AND ' + 'PTE = 1',
+  // definitionExpression: "Type = 'Subterranean'" + ' AND ' + 'PTE = 1',
+  definitionExpression: "Type = 'Subterranean'",
   title: 'PTE Subterranean Lots',
-  renderer: handedOverRenderer,
+  renderer: pteSubterraneanRenderer,
   popupEnabled: false,
 });
 
