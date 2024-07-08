@@ -65,6 +65,14 @@ function App() {
   const ExpropriationList = loadable(() => import('./components/ExpropriationList'));
   const LotIssueList = loadable(() => import('./components/LotIssueList'));
 
+  //
+  const [lotLayerLoaded, setLotLayerLoaded] = useState<any>();
+  useEffect(() => {
+    lotLayer.load().then(() => {
+      setLotLayerLoaded(lotLayer.loadStatus);
+    });
+  });
+
   //**** Create dropdonw list */
   useEffect(() => {
     const dropdownData = new DropDownData({
@@ -435,15 +443,13 @@ function App() {
         <div className="mapDiv" ref={mapDiv}></div>
 
         {/* Lot progress chart is loaded ONLY when charts widget is clicked. */}
-        {nextWidget === 'charts' && nextWidget !== activeWidget ? (
+        {nextWidget === 'charts' && nextWidget !== activeWidget && lotLayerLoaded === 'loaded' && (
           <LotProgressChart
             contractp={contractPackage === null ? '' : contractPackage.field1}
             landtype={landTypeSelected.name}
             landsection={landSection === null ? '' : landSection.name}
             nextwidget={nextWidget === activeWidget ? null : nextWidget}
           />
-        ) : (
-          ''
         )}
       </CalciteShell>
     </div>
