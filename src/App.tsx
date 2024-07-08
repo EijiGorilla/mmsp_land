@@ -188,12 +188,14 @@ function App() {
           </CalciteTabNav>
           {/* CalciteTab: Lot */}
           <CalciteTab>
-            <LotChart
-              contractp={contractPackage === null ? '' : contractPackage.field1}
-              landtype={landTypeSelected.name}
-              landsection={landSection === null ? '' : landSection.name}
-              typelist={landSectionList}
-            />
+            {lotLayerLoaded === 'loaded' && (
+              <LotChart
+                contractp={contractPackage === null ? '' : contractPackage.field1}
+                landtype={landTypeSelected.name}
+                landsection={landSection === null ? '' : landSection.name}
+                typelist={landSectionList}
+              />
+            )}
           </CalciteTab>
 
           {/* CalciteTab: Structure */}
