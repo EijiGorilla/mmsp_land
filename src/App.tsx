@@ -4,11 +4,18 @@ import { map, view, basemaps, layerList } from './Scene';
 import './index.css';
 import './App.css';
 import '@esri/calcite-components/dist/components/calcite-shell';
+import '@esri/calcite-components/dist/components/calcite-panel';
 import '@esri/calcite-components/dist/components/calcite-list';
+import '@esri/calcite-components/dist/components/calcite-label';
 import '@esri/calcite-components/dist/components/calcite-list-item';
 import '@esri/calcite-components/dist/components/calcite-shell-panel';
 import '@esri/calcite-components/dist/components/calcite-action';
 import '@esri/calcite-components/dist/components/calcite-action-bar';
+import '@esri/calcite-components/dist/components/calcite-tabs';
+import '@esri/calcite-components/dist/components/calcite-tab';
+import '@esri/calcite-components/dist/components/calcite-tab-nav';
+import '@esri/calcite-components/dist/components/calcite-button';
+import '@esri/calcite-components/dist/components/calcite-tab-title';
 import '@esri/calcite-components/dist/calcite/calcite.css';
 import {
   CalciteShell,
