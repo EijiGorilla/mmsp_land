@@ -28,7 +28,7 @@ calcite-list-item {
 }
 
 calcite-label {
-  --calcite-ui-text-1: #ffffff;
+  --calcite-color-text-1: #ffffff;
   --calcite-font-size--1: 1.1rem;
   /* margin-top: 1vh; */
   margin-left: 15px;
@@ -36,35 +36,35 @@ calcite-label {
 }
 
 calcite-action-bar {
-  --calcite-ui-border-3: #555555;
-  --calcite-ui-text-3: #bfbfbf;
+  --calcite-color-border-3: #555555;
+  --calcite-color-text-3: #bfbfbf;
 }
 
 calcite-shell {
-  --calcite-ui-foreground-1: #2b2b2b;
-  --calcite-ui-text-1: #ffffff;
-  --calcite-ui-background: #2b2b2b;
-  --calcite-ui-border-3: #555555;
+  --calcite-color-foreground-1: #2b2b2b;
+  --calcite-color-text-1: #ffffff;
+  --calcite-color-background: #2b2b2b;
+  --calcite-color-border-3: #555555;
 }
 
 calcite-shell-panel {
-  --calcite-ui-foreground-1: #2b2b2b;
-  --calcite-ui-foreground-2: #2b2b2b;
-  --calcite-ui-border-3: #555555;
+  --calcite-color-foreground-1: #2b2b2b;
+  --calcite-color-foreground-2: #2b2b2b;
+  --calcite-color-border-3: #555555;
 }
 
 calcite-panel {
   overflow-y: auto;
-  --calcite-ui-foreground-1: #2b2b2b;
-  --calcite-ui-foreground-2: #2b2b2b;
-  --calcite-ui-text-2: #ffffff;
+  --calcite-color-foreground-1: #2b2b2b;
+  --calcite-color-foreground-2: #2b2b2b;
+  --calcite-color-text-2: #ffffff;
   background-color: #2b2b2b;
-  --calcite-ui-border-3: #555555;
+  --calcite-color-border-3: #555555;
 }
 
 calcite-list {
   overflow-y: auto;
-  /* --calcite-ui-border-3: #555555; */
+  /* --calcite-color-border-3: #555555; */
 }
 
 calcite-avatar {
@@ -73,45 +73,31 @@ calcite-avatar {
 }
 
 calcite-tabs {
-  --calcite-ui-border-3: #555555;
-  --calcite-ui-border-2: #555555;
-  --calcite-ui-border-1: #555555;
+  --calcite-color-border-3: #555555;
+  --calcite-color-border-2: #555555;
+  --calcite-color-border-1: #555555;
   border-style: solid;
   border-width: 0.7;
   border-top: rgb(0, 0, 0, 0);
   width: 50vh;
 }
 
+#layers-container {
+  overflow-y: auto;
+}
+
 #result-list {
   overflow-y: auto;
-  --calcite-ui-text-1: #ff0000;
-  --calcite-ui-text-3: #eaeaea;
-  --calcite-ui-foreground-2: #202020;
+  --calcite-color-text-1: #ff0000;
+  --calcite-color-text-3: #eaeaea;
+  --calcite-color-foreground-2: #202020;
 }
 
 #exproListChip {
-  --calcite-ui-text-1: #ffffff;
-  /*--calcite-ui-foreground-2: #555555;*/
-  --calcite-ui-foreground-2: rgb(0, 0, 0, 0);
+  --calcite-color-text-1: #ffffff;
+  /*--calcite-color-foreground-2: #555555;*/
+  --calcite-color-foreground-2: rgb(0, 0, 0, 0);
   margin-inline-end: 0.75rem;
-}
-
-.esri-view .esri-view-surface--touch-none:focus::after {
-  outline: none !important;
-}
-
-.esri-icon-non-visible::before {
-  content: '\e610' !important;
-}
-.esri-icon-visible::before {
-  content: '\e611' !important;
-  background-color: #00c5ff;
-  color: #202020;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-  display: none;
 }
 
 .esri-legend__layer-caption {
@@ -119,13 +105,13 @@ calcite-tabs {
 }
 
 .calcite-tutorial {
-  --calcite-ui-brand: #039851;
-  --calcite-ui-brand-hover: #008d52;
+  --calcite-color-brand: #039851;
+  --calcite-color-brand-hover: #008d52;
 }
 
 .calcite-tutorial calcite-chip {
-  --calcite-ui-foreground-2: var(--calcite-ui-brand);
-  --calcite-ui-text-1: white;
+  --calcite-color-foreground-2: var(--calcite-color-brand);
+  --calcite-color-text-1: white;
   margin-inline-end: 0.75rem;
 }
 
@@ -254,4 +240,29 @@ calcite-tabs {
 /* Progress Chart */
 calcite-label {
   font-size: large;
+}
+
+.esri-legend * {
+  background-color: #2b2b2b;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #00032235;
+
+  /*#032235*/
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #00032235;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #00032235;
 }

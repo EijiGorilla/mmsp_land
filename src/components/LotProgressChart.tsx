@@ -9,7 +9,9 @@ import {
   CalciteRadioButton,
   CalciteRadioButtonGroup,
 } from '@esri/calcite-components-react';
-
+import '@esri/calcite-components/dist/components/calcite-radio-button';
+import '@esri/calcite-components/dist/components/calcite-radio-button-group';
+import '@esri/calcite-components/dist/components/calcite-label';
 // Dispose function
 function maybeDisposeRoot(divId: any) {
   am5.array.each(am5.registry.rootElements, function (root) {

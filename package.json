@@ -1,12 +1,12 @@
 {
   "homepage": "https://eijigorilla.github.io/mmsp_land",
   "name": "mmsp_land",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "dependencies": {
     "@amcharts/amcharts5": "^5.5.7",
-    "@arcgis/core": "^4.28.10",
-    "@esri/calcite-components-react": "^1.11.0",
+    "@arcgis/core": "^4.30.9",
+    "@esri/calcite-components-react": "^2.8.5",
     "@loadable/component": "^5.15.3",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
