@@ -178,6 +178,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
 
     // Set slice opacity and stroke color
     pieSeries.slices.template.setAll({
+      toggleKey: 'none',
       fillOpacity: 0.9,
       stroke: am5.color('#ffffff'),
       strokeWidth: 0.5,
