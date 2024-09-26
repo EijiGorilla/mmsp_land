@@ -28,7 +28,7 @@ calcite-list-item {
 }
 
 calcite-label {
-  --calcite-color-text-1: #ffffff;
+  --calcite-color-text-1: #9ca3af;
   --calcite-font-size--1: 1.1rem;
   /* margin-top: 1vh; */
   margin-left: 15px;
@@ -125,8 +125,10 @@ calcite-tabs {
 }
 
 .totalLotsNumber,
-.handedOverNumber {
-  color: #6ede00;
+.handedOverNumber,
+.DemolishedNumber,
+.isfTotalNumber {
+  color: #d1d5db;
   font-size: 2rem;
   font-weight: bold;
   font-family: 'calibri';
@@ -158,14 +160,6 @@ calcite-tabs {
   padding-top: 0.6vh;
 }
 
-.DemolishedNumber {
-  color: #6ede00;
-  font-size: 2rem;
-  font-weight: bold;
-  font-family: 'calibri';
-  margin-left: 4%;
-}
-
 .moaStructureTitle {
   color: white;
   font-size: 1.1vw;
@@ -185,14 +179,6 @@ calcite-tabs {
   font-size: 1.1vw;
   padding-bottom: 0.5vh;
   padding-top: 0.6vh;
-}
-
-.isfTotalNumber {
-  color: #6ede00;
-  font-size: 2rem;
-  font-weight: bold;
-  font-family: 'calibri';
-  margin-left: 4%;
 }
 
 /* Header */

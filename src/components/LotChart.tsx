@@ -152,12 +152,29 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
         //legendLabelText: "[{fill}]{category}[/]",
         legendValueText: "{valuePercentTotal.formatNumber('#.')}% ({value})",
         radius: am5.percent(45), // outer radius
-        innerRadius: am5.percent(20),
-        scale: 2,
+        innerRadius: am5.percent(28),
+        scale: 2.1,
       }),
     );
     pieSeriesRef.current = pieSeries;
     chart.series.push(pieSeries);
+
+    // values inside a donut
+    let inner_label = pieSeries.children.push(
+      am5.Label.new(root, {
+        text: '[#ffffff]{valueSum}[/]\n[fontSize: 7px; #d3d3d3; verticalAlign: super]LOTS[/]',
+        fontSize: 15,
+        centerX: am5.percent(50),
+        centerY: am5.percent(40),
+        populateText: true,
+        oversizedBehavior: 'fit',
+        textAlign: 'center',
+      }),
+    );
+
+    pieSeries.onPrivate('width', (width: any) => {
+      inner_label.set('maxWidth', width * 0.7);
+    });
 
     // Set slice opacity and stroke color
     pieSeries.slices.template.setAll({
@@ -530,7 +547,8 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
       <CalciteLabel>TOTAL LOTS</CalciteLabel>
       <CalciteLabel layout="inline">
         <b className="totalLotsNumber">
-          {thousands_separators(lotNumber[1])}
+          {thousands_separators(lotNumber[0])}
+          {/*thousands_separators(lotNumber[1])*/}
           <img
             src="https://EijiGorilla.github.io/Symbols/Land_logo.png"
             alt="Land Logo"
@@ -538,7 +556,7 @@ const LotChart = ({ contractp, landtype, landsection }: any) => {
             width={'21%'}
             style={{ marginLeft: '105%', display: 'flex', marginTop: '-17%' }}
           />
-          <div className="totalLotsNumber2">({thousands_separators(lotNumber[0])})</div>
+          {/* <div className="totalLotsNumber2">({thousands_separators(lotNumber[0])})</div> */}
         </b>
       </CalciteLabel>
 
