@@ -88,3 +88,15 @@ export const statusIsfQuery = statusIsf.map((status, index) => {
     color: colorIsf[index],
   });
 });
+
+// Feautre layer portalItem id:
+// ArcGIS Portal portalItem id:------------
+// land_structure: '0c172b82ddab44f2bb439542dd75e8ae'
+// alignment: '52d4f29105934e3f95f6b39c7e5fba6e'
+
+// AGOL portalItem id:-------------
+// land_structure: '6223b2e0805f441a995e6eb72ce16c02'
+// alignment: 'b5a8becc6c1a4d4ba093b960fdfe23d8'
+export const land_portalItem_id = '0c172b82ddab44f2bb439542dd75e8ae';
+export const alignment_portalItem_id = '52d4f29105934e3f95f6b39c7e5fba6e';
+export const portal_url = { url: 'https://gis.railway-sector.com/portal' };
