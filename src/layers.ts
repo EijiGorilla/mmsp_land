@@ -611,6 +611,60 @@ export const bssDepotBuildingLayer = new FeatureLayer({
 });
 
 /* East Valenzuela */
+let evs_station_renderer = new UniqueValueRenderer({
+  field: 'Layer',
+  uniqueValueInfos: [
+    {
+      value: 'Station Building',
+      label: 'Station Building',
+      symbol: new SimpleFillSymbol({
+        color: [0, 0, 0, 0],
+        outline: {
+          style: 'long-dash',
+          width: 1.5,
+          color: [225, 225, 225],
+        },
+      }),
+    },
+    {
+      value: 'Station Plaza',
+      label: 'Station Plaza',
+      symbol: new SimpleFillSymbol({
+        color: [60, 175, 153],
+        // style: 'cross',
+        outline: {
+          width: 1,
+          color: [225, 225, 225],
+        },
+      }),
+    },
+    {
+      value: 'Cross Road Box',
+      label: 'Cross Road Box',
+      symbol: new SimpleFillSymbol({
+        color: [168, 56, 0],
+        outline: {
+          width: 1,
+          color: [225, 225, 225],
+        },
+      }),
+    },
+    {
+      value: 'Platform',
+      label: 'Platform',
+      symbol: new SimpleFillSymbol({
+        color: 'pink',
+        style: 'backward-diagonal',
+        outline: {
+          width: 1,
+          color: [225, 225, 225],
+          style: 'solid',
+        },
+      }),
+    },
+  ],
+});
+
 export const evsLayer = new FeatureLayer({
   portalItem: {
     id: '0c172b82ddab44f2bb439542dd75e8ae',
@@ -620,6 +674,7 @@ export const evsLayer = new FeatureLayer({
   },
   layerId: 1,
   title: 'East Valenzuela Station',
+  renderer: evs_station_renderer,
   // outFields: ['*'],
   popupEnabled: false,
 });

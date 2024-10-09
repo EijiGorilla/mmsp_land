@@ -40,8 +40,8 @@ const lotGroupLayer = new GroupLayer({
 });
 
 const evsBoundaryPoGroupLayer = new GroupLayer({
-  title: 'EVS Station/Creek',
-  visible: false,
+  title: 'East Valenzuela Station',
+  visible: true,
   visibilityMode: 'independent',
   layers: [creekDivLayer, evsLayer],
 });
@@ -113,12 +113,10 @@ export const layerList = new LayerList({
     item.title === 'Existing Structure' ||
     item.title === 'Demolished Structure' ||
     item.title === 'ISF (Informal Settlers Families)' ||
-    item.title === 'East Valenzuela Station' ||
     item.title === 'Senate-DepEd Boundary' ||
     item.title === 'PTE Subterranean Lots' ||
     item.title === 'Handed-Over Lots' ||
-    item.title === 'Structures' ||
-    item.title === 'EVS Station/Creek'
+    item.title === 'Structures'
       ? (item.visible = false)
       : (item.visible = true);
   },
